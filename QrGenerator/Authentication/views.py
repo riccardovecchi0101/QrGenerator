@@ -7,10 +7,6 @@ from django.contrib.auth.models import User
 from .models import *
 
 
-# Define a view function for the home page
-def home(request):
-    return redirect('/login/')
-
 def success_page(request):
     return render(request, "success.html")
 
