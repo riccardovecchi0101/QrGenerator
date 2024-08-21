@@ -7,12 +7,6 @@ from django.contrib.auth.models import User
 from .models import *
 
 
-def success_page(request):
-    return render(request, "success.html")
-
-def empty(request):
-    return redirect('/home/')
-
 
 # Define a view function for the login page
 def login_page(request):
@@ -25,7 +19,7 @@ def login_page(request):
         if not User.objects.filter(username=username).exists():
             # Display an error message if the username does not exist
             messages.error(request, 'Invalid Username')
-            return redirect('/login/')
+            return redirect('authentication:login')
 
         # Authenticate the user with the provided username and password
         user = authenticate(username=username, password=password)
@@ -33,11 +27,11 @@ def login_page(request):
         if user is None:
             # Display an error message if authentication fails (invalid password)
             messages.error(request, "Invalid Password")
-            return redirect('/login/')
+            return redirect('authentication:login')
         else:
             # Log in the user and redirect to the home page upon successful login
             login(request, user)
-            return redirect('/success/')
+            return redirect('mainApp:hub')
 
     # Render the login page template (GET request)
     return render(request, 'login.html')
@@ -58,7 +52,7 @@ def register_page(request):
         if user.exists():
             # Display an information message if the username is taken
             messages.info(request, "Username already taken!")
-            return redirect('/register/')
+            return redirect('authentication:register')
 
         # Create a new User object with the provided information
         user = User.objects.create_user(
@@ -73,7 +67,8 @@ def register_page(request):
 
         # Display an information message indicating successful account creation
         messages.info(request, "Account created Successfully!")
-        return redirect('/register/')
+        return redirect('authentication:register')
 
     # Render the registration page template (GET request)
     return render(request, 'register.html')
+

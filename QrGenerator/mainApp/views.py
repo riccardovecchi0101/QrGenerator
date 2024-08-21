@@ -5,3 +5,6 @@ from .models import *
 
 def home_page(request):
     return render(request, "home.html")
+
+def hub_page(request):
+    return render(request, "hub.html")
