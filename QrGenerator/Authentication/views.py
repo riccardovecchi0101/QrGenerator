@@ -5,8 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import *
-
-
+from mainApp.models import Profile
 
 # Define a view function for the login page
 def login_page(request):
@@ -61,6 +60,7 @@ def register_page(request):
             username=username
         )
 
+        Profile.objects.create(user=user)
         # Set the user's password and save the user object
         user.set_password(password)
         user.save()

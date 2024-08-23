@@ -24,7 +24,7 @@
       color: black;
   }
   .title{
-      color: blue;
+      color: black;
       text-align: left
   }
 
@@ -34,7 +34,7 @@
    }
 
   #title{
-      color:red;
+      color:white;
       text-align: center;
 
   }
@@ -43,7 +43,7 @@
 
 <body>
 <div>
-<nav id="simple_navbar" class="navbar fixed-top navbar-dark bg-dark px-3 " >
+<nav id="simple_navbar" class="navbar fixed-top navbar-dark bg-primary px-3 " >
   <a class="navbar-brand" href="#">  <div id="carousel" class="carousel slide" data-bs-ride="carousel" >
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -61,10 +61,10 @@
   <h1 id="title" class="nav"> QR GENERATOR</h1>
   <ul class="nav">
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'authentication:login' %}">Login</a>
+      <a class="nav-link text-white" href="{% url 'authentication:login' %}">Login</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'authentication:register' %}">Register</a>
+      <a class="nav-link text-white" href="{% url 'authentication:register' %}">Register</a>
     </li>
   </ul>
 </nav>
