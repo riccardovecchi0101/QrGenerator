@@ -12,5 +12,16 @@ class Profile(models.Model):
 class Project(models.Model):
     date = models.DateField()
     title = models.CharField(max_length=100)
-    collaborator = models.ManyToManyField(Profile)
+    collaborators = models.ManyToManyField(Profile)
 
+
+class ProjecetProfile(models.Model):
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+
+class Qr(models.Model):
+    id = models.AutoField(primary_key=True)
+    description = models.CharField(max_length=100)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    counter = 0
