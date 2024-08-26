@@ -1,9 +1,9 @@
-{% load static %}
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width,
@@ -112,32 +112,30 @@
       </div>
       <div class="modal-body">
           <form>
-              <label for="projectTitle" class="form-label">ProjectTitle</label>
-              <input type="text" id="projectTitle" class="form-control" aria-describedby="passwordHelpBlock">
-              <label for="projectDescription" class="form-label">Description</label>
-              <textarea class="form-control" id="projectDescription" rows="3"></textarea>
-              <button type="submit" class="btn btn-primary mt-3" >Submit</button>
+              {% csrf_token %}
+              <label for="title" class="form-label">ProjectTitle</label>
+              <input type="text" id="title" class="form-control" aria-describedby="passwordHelpBlock">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control" id="description" rows="3" maxlength="1000"></textarea>
+              <div id="passwordHelpBlock" class="form-text">
+                max 1000 characters
+              </div>
+              <script> const projectCreatorUrl = "{% url 'mainApp:project_creator' %}";</script>
+              <button type="submit" class="btn btn-primary mt-3" id="submit-button" >Submit</button>
           </form>
       </div>
     </div>
   </div>
 </div>
 
-</body>
-
-
-
-
-
-
-</body>
-
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
+<script src="{% static 'script.js' %}"></script>
+
+</body>
 
 </html>
 

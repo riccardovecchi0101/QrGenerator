@@ -12,10 +12,11 @@ class Profile(models.Model):
 class Project(models.Model):
     date = models.DateField()
     title = models.CharField(max_length=100)
+    description = models.CharField(max_length=1000)
     collaborators = models.ManyToManyField(Profile)
 
 
-class ProjecetProfile(models.Model):
+class ProjectProfile(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
