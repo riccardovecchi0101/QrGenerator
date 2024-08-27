@@ -9,7 +9,12 @@ def home_page(request):
     return render(request, "home.html")
 
 def hub_page(request):
-    return render(request, "hub.html")
+    current_user = request.user
+    user_profile = Profile.objects.get(user=current_user)
+    my_projects = ProjectProfile.objects.filter(owner=user_profile)
+    projects = [profile.project for profile in my_projects]
+
+    return render(request, "hub.html", {'projects':projects})
 
 
 def create_project(request):

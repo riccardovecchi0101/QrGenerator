@@ -25,14 +25,12 @@
     <div class="container-fluid p-0 d-flex h-100">
         <div id="bdSidebar"
              class="d-flex flex-column
-                    flex-shrink-0
                     bg-primary
-                    text-white offcanvas-md offcanvas-start">
-            <a href="#"
-               class="navbar-brand">
-            </a>
+                    text-white offcanvas-md offcanvas-start"
+             style="width:150px">
+
             <ul class="mynav nav nav-pills flex-column mb-auto py-3" >
-                <li class="nav-item mb-1">
+                <li class="nav-item mb-1 mt-1">
                     <a data-toggle="modal" data-target="#exampleModal">
                         <i class="fa-regular fa-user"></i>
                         Profile
@@ -40,7 +38,7 @@
                 </li>
 
 
-                <li class="sidebar-item  nav-item mb-1">
+                <li class="sidebar-item  nav-item mt-1">
                     <a href="#"
                        class="sidebar-link collapsed"
                        data-bs-toggle="collapse"
@@ -78,10 +76,30 @@
                 </nav>
 
                 <hr>
-            </div>
 
-        </div>
-    </div>
+                <ul class="list-unstyled">
+                    {% for project in projects %}
+                        <li>
+                            <div class="card text-black border-primary mb-3" style="max-width: 70rem;">
+                              <div class="card-header">{{project.title}}</div>
+                              <div class="card-body">
+                                <h5 class="card-title">{{project.title}}</h5>
+                                <p class="card-text">{{project.description}}</p>
+                                <ul class="list-group list-unstyled list-group-horizontal gap-3">
+                                  <li><button type="button" class="btn btn-lg btn-outline-success">
+                                     <i class="bi bi-pencil"></i> edit
+                                  </button></li>
+                                    <li><button type="button" class="btn btn-lg btn-outline-danger">
+                                     <i class="bi bi-x"></i>remove
+                                    </button></li>
+                                </ul>
+                              </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
