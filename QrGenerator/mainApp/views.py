@@ -32,5 +32,5 @@ def create_project(request):
         project_owner = Profile.objects.get(user=current_user)
         ProjectProfile.objects.create(owner=project_owner, project=current_project)
 
-    return render(request, 'hub.html')
+    return redirect('mainApp:hub')
 

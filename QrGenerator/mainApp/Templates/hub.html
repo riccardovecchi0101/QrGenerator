@@ -19,10 +19,63 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
 
+ <style>
+  .body {
+      position: relative;
+  }
+  .inner{
+      border: 2px solid green;
+      padding: 1rem;
+      color: black;
+  }
+  .title{
+      color: black;
+      text-align: left
+  }
+
+  #carousel{
+      width: 50px;
+      height: 50px;
+   }
+
+  #title{
+      color:white;
+      text-align: center;
+
+  }
+
+  </style>
+
+
 
 <body>
 
-    <div class="container-fluid p-0 d-flex h-100">
+    <div class="container-fluid d-flex">
+        <nav id="simple_navbar" class="navbar fixed-top navbar-light bg-primary px-3">
+  <a class="navbar-brand" href="#">  <div id="carousel" class="carousel slide" data-bs-ride="carousel" >
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src= "{% static 'qr.png' %}" class="d-block w-100" alt="not found" width="50px" height="50px">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'qr2.jpg' %}" class="d-block w-100" alt="not found" width="50px" height="50px">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'qr.png' %}" class="d-block w-100" alt="not found" width="50px" height="50px">
+    </div>
+  </div>
+</div>
+  </a>
+  <h1 id="title" class="nav" style="color: white"> QR GENERATOR</h1>
+  <ul class="nav">
+    <li class="nav-item">
+       <a class="nav-link text-white" href="https://github.com/riccardovecchi0101/QrGenerator"><i class="bi bi-github"></i></a>
+    </li>
+  </ul>
+</nav>
+</div>
+
+        <!--
         <div id="bdSidebar"
              class="d-flex flex-column
                     bg-primary
@@ -54,19 +107,18 @@
                     </ul>
                 </li>
             </ul>
+            -->
             <hr>
-        </div>
+
 
         <div class="bg-light flex-fill">
             <div class="p-2 d-md-none d-flex text-white bg-success">
-                <a href="#" class="text-white"
-                   data-bs-toggle="offcanvas"
-                   data-bs-target="#bdSidebar">
+                <a href="#" class="text-white" data-bs-spy="scroll" data-bs-target="simple_navbar" data-bs-offset="0" class="inner" tabindex="0">
                     <i class="fa-solid fa-bars"></i>
                 </a>
             </div>
             <div class="p-4">
-                <nav style="--bs-breadcrumb-divider:'>';font-size:14px">
+                <nav style="--bs-breadcrumb-divider:'>';font-size:14px; padding-top:60px">
                      <div class="d-grid gap-2 position-relative">
                             <button class="btn btn-outline-secondary position-absolute end-0" data-toggle="modal" data-target="#ProjectModal" type="button">Add project</button>
                      </div>
@@ -100,7 +152,7 @@
                 </ul>
 
             </div>
-
+        </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -132,7 +184,7 @@
           <form>
               {% csrf_token %}
               <label for="title" class="form-label">ProjectTitle</label>
-              <input type="text" id="title" class="form-control" aria-describedby="passwordHelpBlock">
+              <input type="text" id="title1" class="form-control" aria-describedby="passwordHelpBlock">
               <label for="description" class="form-label">Description</label>
               <textarea class="form-control" id="description" rows="3" maxlength="1000"></textarea>
               <div id="passwordHelpBlock" class="form-text">
@@ -145,15 +197,15 @@
     </div>
   </div>
 </div>
-
+</body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
 <script src="{% static 'script.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-</body>
 
 </html>
 
