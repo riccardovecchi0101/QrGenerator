@@ -1,5 +1,5 @@
 from django.utils import timezone
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -32,5 +32,32 @@ def create_project(request):
         project_owner = Profile.objects.get(user=current_user)
         ProjectProfile.objects.create(owner=project_owner, project=current_project)
 
-    return redirect('mainApp:hub')
+    return render(request, 'hub.html', )
 
+
+def delete_project(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    if request.method == 'POST':
+        project.delete()
+        return redirect('mainApp:hub')
+
+    return render(request, 'hub.html', {'project': project})
+
+
+def edit_project(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+
+        if title and description:
+            project.title = title
+            project.description = description
+            project.save()
+            return redirect('mainApp:hub')
+        else:
+            return render(request, 'mainApp:hub', {'error': 'Title and description are required.'})
+
+    return render(request, 'mainApp:hub', {'project': project})
