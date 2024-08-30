@@ -23,6 +23,6 @@ class ProjectProfile(models.Model):
 
 class Qr(models.Model):
     id = models.AutoField(primary_key=True)
-    description = models.CharField(max_length=100)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    counter = 0
+    image = models.ImageField(upload_to='images/' + str(id))
+

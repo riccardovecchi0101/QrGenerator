@@ -1,11 +1,11 @@
-
-// waiting for the dom to be fully loaded
+// Waiting for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function () {
 
     const submitButton = document.getElementById('submit-button');
     submitButton.addEventListener('click', function (event) {
-      //  event.preventDefault();
-        const title = document.getElementById('title1').value
+        //event.preventDefault();  // Previene il comportamento di submit predefinito
+
+        const title = document.getElementById('title1').value;
         const description = document.getElementById('description').value;
         const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
@@ -25,20 +25,20 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             console.log('Progetto inserito', data);
-            alert("Progetto inserito correttamente")
-
+            alert("Progetto inserito correttamente");
         })
         .catch((error) => {
             console.error('Error:', error);
         });
+    });
 
 
-       const editButton = document.getElementById('editbtn');
-       project_id= this.getAttribute('data-id');
-       submitButton.addEventListener('click', function (event) {
+    const editButton = document.getElementById('editbtn');
+    project_id = this.getAttribute('data-id');
+    editButton.addEventListener('click', function (event) {
+        //event.preventDefault();  // Previene il comportamento di submit predefinito
 
-       }
-        const title = document.getElementById('edit-title').value
+        const title = document.getElementById('edit-title').value;
         const description = document.getElementById('edit-description').value;
         const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
@@ -59,15 +59,11 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             console.log('Progetto modificato', data);
-            alert("Progetto modificato correttamente")
-
+            alert("Progetto modificato correttamente");
         })
         .catch((error) => {
             console.error('Error:', error);
         });
-
     });
 
-
-
-
+});

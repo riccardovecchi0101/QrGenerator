@@ -18,13 +18,6 @@
         referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
-    <script src="{% static 'script.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 </head>
 
  <style>
@@ -85,9 +78,9 @@
                     Profile
                 </a>
             </li>
-</ul>
-</nav>
-</div>
+    </ul>
+    </nav>
+    </div>
 
 
             <hr>
@@ -163,6 +156,13 @@
                                 </button>
                             </form>
                         </li>
+                         <!-- QR Button -->
+                        <li class="ms-auto text-end"> <!-- Aligns the following elements to the right -->
+                            <button type="button"  class="btn btn-outline-dark">create QR</button>
+
+                        <l1/>
+
+
                     </ul>
                 </div>
             </div>
@@ -171,6 +171,10 @@
     </ul>
 </div>
 </div>
+
+
+
+
 
 <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -210,7 +214,7 @@
                 max 1000 characters
               </div>
               <script> const projectCreatorUrl = "{% url 'mainApp:project_creator' %}";</script>
-              <button type="submit" class="btn btn-primary mt-3" id="submit-button" data-bs-dismiss="modal">Submit</button>
+              <button type="submit" class="btn btn-primary mt-3" id="submit-button">Submit</button>
           </form>
       </div>
     </div>
@@ -218,11 +222,32 @@
 </div>
 
 
-
-
 </body>
 
-</body>
+<script>
+    let input = document.getElementById("link-name");
+    let button = document.getElementById("qrBtn")
+
+    button.disabled = true; //setting button state to disabled
+
+    input.addEventListener("change", stateHandle);
+
+    function stateHandle() {
+        if (document.querySelector(".input").value === "") {
+            button.disabled = true; //button remains disabled
+        } else {
+            button.disabled = false; //button is enabled
+    }
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
+<script src="{% static 'script.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
 
 
 </html>
