@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
-
+from django_resized import ResizedImageField
 
 class Profile(models.Model):
     user = models.OneToOneField(
@@ -25,4 +25,4 @@ class ProjectProfile(models.Model):
 class Qr(models.Model):
     id = models.AutoField(primary_key=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images/')
+    image = ResizedImageField(size=[100, 100], upload_to='images/', blank=True, null=True)

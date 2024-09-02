@@ -1,8 +1,8 @@
 
-  #myCarousel{
-       width: 120px;
-       height: 120px;
-       display: flex;
+  #carousel{
+       width: 100px;
+       height: 100px;
+
   }
 
   .carousel-item{
