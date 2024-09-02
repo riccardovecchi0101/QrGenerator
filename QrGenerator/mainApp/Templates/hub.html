@@ -20,39 +20,10 @@
 
 </head>
 
- <style>
-  .body {
-      position: relative;
-  }
-  .inner{
-      border: 2px solid green;
-      padding: 1rem;
-      color: black;
-  }
-  .title{
-      color: black;
-      text-align: left
-  }
-
-  #carousel{
-      width: 50px;
-      height: 50px;
-   }
-
-  #title{
-      color:white;
-      text-align: center;
-
-  }
-
-  </style>
-
-
-
 <body>
 
-    <div class="container-fluid d-flex">
-        <nav id="simple_navbar" class="navbar fixed-top navbar-light bg-primary px-3">
+<div class="container-fluid d-flex">
+  <nav id="simple_navbar" class="navbar fixed-top navbar-light bg-primary px-3">
   <a class="navbar-brand" href="#">  <div id="carousel" class="carousel slide" data-bs-ride="carousel" >
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -157,9 +128,16 @@
                             </form>
                         </li>
                          <!-- QR Button -->
-                        <li class="ms-auto text-end"> <!-- Aligns the following elements to the right -->
-                            <button type="button"  class="btn btn-outline-dark">create QR</button>
-
+                        <li>
+                            <form method="POST" action="{% url 'mainApp:create_qr' project.id %}">
+                                {% csrf_token %}
+                                <ul class="list-group list-unstyled list-group-horizontal gap-3">
+                                    <li><button type="submit"  class="btn btn-lg btn-outline-dark">create QR</button></li>
+                                    <li><i class="bi bi-arrow-right"></i> </li>
+                                    <li><label for="site_link" class="mx-auto">Site link:</label></li>
+                                    <li><input class="mx-auto" id="site_link" type="text" name="sitelink" placeholder="www.example.org"></li>
+                                </ul>
+                            </form>
                         <l1/>
 
 

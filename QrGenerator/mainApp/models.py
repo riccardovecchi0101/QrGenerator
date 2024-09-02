@@ -14,6 +14,7 @@ class Project(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
     collaborators = models.ManyToManyField(Profile)
+    qr_number = models.SmallIntegerField(default=0)
 
 
 class ProjectProfile(models.Model):
@@ -24,5 +25,5 @@ class ProjectProfile(models.Model):
 class Qr(models.Model):
     id = models.AutoField(primary_key=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images/' + str(id))
+    image = models.ImageField(upload_to='images/')
 

@@ -1,9 +1,12 @@
+from io import BytesIO
+
+from django.core.files.base import ContentFile
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-
+import segno
 
 def home_page(request):
     return render(request, "home.html")
@@ -65,4 +68,24 @@ def edit_project(request, project_id):
 
 
 def create_qr(request, project_id):
-    pass
+    project = get_object_or_404(Project, id=project_id)
+    if request.method == 'POST':
+        site_link = request.POST.get('sitelink')
+        site_qr = segno.make(site_link)
+
+        qr_number = project.qr_number
+        project.qr_number += 1
+        project.save()
+
+        image_io = BytesIO()
+        site_qr.save(image_io, kind='png', scale=7)
+        image_io.seek(0)  # Reset del puntatore di lettura
+
+
+        image_filename = f'{project.title}_{qr_number}.png'
+
+
+        qr_instance = Qr(project=project)
+        qr_instance.image.save(image_filename, ContentFile(image_io.read()), save=True)
+
+    return redirect('mainApp:hub')
