@@ -119,7 +119,7 @@
                             <form method="POST" action="{% url 'mainApp:create_qr' project.id %}">
                                 {% csrf_token %}
                                 <ul class="list-group list-unstyled list-group-horizontal gap-3">
-                                    <li><button type="submit"  class="btn btn-lg btn-outline-dark">create QR</button></li>
+                                    <li><button type="submit"  class="btn btn-lg btn-outline-dark">Add QR</button></li>
                                     <li><i class="bi bi-arrow-right"></i> </li>
                                     <li><label for="site_link" class="mx-auto">Site link:</label></li>
                                     <li><input class="mx-auto" id="site_link" type="text" name="sitelink" placeholder="www.example.org"></li>
@@ -128,24 +128,25 @@
                         <l1/>
 
                         <li class="ms-auto">
-                            <div id="myCarousel" class="carousel slide"  data-bs-interval="false">
-                            <div class="carousel-inner">
+
                             {% for qr in qrs %}
                             {% if qr.project_id == project.id %}
-                            <div class="carousel-item border border-3  border-dark rounded">
-                                <img src="{{qr.image.url}}" class="d-block w-100" alt="not found">
-                            </div>
+                                <div  class="carousel slide"  data-bs-interval="false">
+                                <div class="carousel-inner">
+                                <div class="carousel-item border border-3  border-dark rounded">
+                                    <img src="{{qr.image.url}}" class="d-block w-100" alt="not found">
+                                </div>
+                                     </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(100%);"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next ms-auto" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" style="filter: invert(100%);" aria-hidden="true"></span>
+                                </button>
+                                </div>
                             {% endif %}
                             {% endfor %}
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(100%);"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next ms-auto" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" style="filter: invert(100%);" aria-hidden="true"></span>
-                            </button>
-                            </div>
                     </li>
 
 
