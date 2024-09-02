@@ -20,3 +20,15 @@
       color:white;
       text-align: center;
   }
+
+  #myCarousel{
+       width: 120px;
+       height: 120px;
+       display: flex;
+  }
+
+  .carousel-item{
+        width:100%;
+        height:100%;
+        justify-content: center
+  }

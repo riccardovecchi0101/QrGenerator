@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import segno
 
+
 def home_page(request):
     return render(request, "home.html")
 
@@ -17,8 +18,13 @@ def hub_page(request):
     user_profile = Profile.objects.get(user=current_user)
     my_projects = ProjectProfile.objects.filter(owner=user_profile)
     projects = [profile.project for profile in my_projects]
+    qrs = []
+    for project in projects:
+        for qr in Qr.objects.all():
+            if qr.project == project:
+                qrs.append(qr)
 
-    return render(request, "hub.html", {'projects': projects})
+    return render(request, "hub.html", {'projects': projects, 'qrs': qrs})
 
 
 def create_project(request):
@@ -81,9 +87,7 @@ def create_qr(request, project_id):
         site_qr.save(image_io, kind='png', scale=7)
         image_io.seek(0)  # Reset del puntatore di lettura
 
-
         image_filename = f'{project.title}_{qr_number}.png'
-
 
         qr_instance = Qr(project=project)
         qr_instance.image.save(image_filename, ContentFile(image_io.read()), save=True)

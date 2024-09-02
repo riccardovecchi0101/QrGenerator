@@ -26,4 +26,3 @@ class Qr(models.Model):
     id = models.AutoField(primary_key=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/')
-
