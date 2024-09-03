@@ -10,6 +10,7 @@ class Profile(models.Model):
         primary_key=True,
     )
 class Project(models.Model):
+    id = models.AutoField(primary_key=True)
     date = models.DateField()
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
@@ -25,4 +26,4 @@ class ProjectProfile(models.Model):
 class Qr(models.Model):
     id = models.AutoField(primary_key=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    image = ResizedImageField(size=[100, 100], upload_to='images/', blank=True, null=True)
+    image = ResizedImageField(size=[500, 500], upload_to='images/', blank=True, null=True)

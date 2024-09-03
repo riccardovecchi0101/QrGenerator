@@ -18,11 +18,7 @@ def hub_page(request):
     user_profile = Profile.objects.get(user=current_user)
     my_projects = ProjectProfile.objects.filter(owner=user_profile)
     projects = [profile.project for profile in my_projects]
-    qrs = []
-    for project in projects:
-        for qr in Qr.objects.all():
-            if qr.project == project:
-                qrs.append(qr)
+    qrs = Qr.objects.all()
 
     return render(request, "hub.html", {'projects': projects, 'qrs': qrs})
 

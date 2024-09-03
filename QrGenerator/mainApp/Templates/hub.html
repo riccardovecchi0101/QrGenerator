@@ -22,7 +22,7 @@
 
 <body>
 
-<div class="container-fluid d-flex">
+div class="container-fluid d-flex">
   <nav id="simple_navbar" class="navbar fixed-top navbar-light bg-primary px-3">
 
   <h1 id="title" class="nav mx-auto" style="color: white;"> QR GENERATOR</h1>
@@ -65,7 +65,7 @@
      <ul class="list-unstyled">
          {% for project in projects %}
         <li>
-            <div class="card text-black border border-3 border-primary mb-3" style="max-width: 70rem;">
+            <div class="card text-black border border-3 border-primary mb-3" style="max-width: 120rem; max-height: 20rem;">
                 <div class="card-header">{{ project.title }}</div>
                 <div class="card-body">
                     <h5 class="card-title">{{ project.title }}</h5>
@@ -127,15 +127,15 @@
                             </form>
                         <l1/>
 
-                      <li class="ms-auto">
 
-                    <!-- Carousel -->
-                    <div id="carousel{{ forloop.counter }}" class="carousel slide" data-bs-interval="false" style="width=120px; height=120px">
+                  <li class="ms-auto">
+         <!-- Carousel -->
+                    <div id="carousel{{ forloop.counter }}" class="carousel slide" data-bs-interval="false" style="width: 100px; height: 100px;">
                         <div class="carousel-inner">
                             {% for qr in qrs %}
                                 {% if qr.project_id == project.id %}
-                                    <div class="carousel-item {% if forloop.first %}active{% endif %} border border-3 border-dark rounded" style="width=100%; height=100%">
-                                        <img src="{{ qr.image.url }}" class="d-block w-100" alt="QR Code Image">
+                                    <div class="carousel-item active border border-3 border-dark rounded">
+                                        <img src="{{ qr.image.url }}"class="d-block w-100" alt="not found">
                                     </div>
                                 {% endif %}
                             {% endfor %}
@@ -149,16 +149,13 @@
                         </button>
                     </div>
                 </li>
-
                     </ul>
+                        {% endfor %}
                 </div>
             </div>
-        </li>
-    {% endfor %}
     </ul>
 </div>
 </div>
-
 
 
 
