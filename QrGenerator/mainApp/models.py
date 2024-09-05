@@ -13,6 +13,7 @@ class Project(models.Model):
     id = models.AutoField(primary_key=True)
     date = models.DateField()
     title = models.CharField(max_length=100)
+    link = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
     collaborators = models.ManyToManyField(Profile)
     qr_number = models.SmallIntegerField(default=0)

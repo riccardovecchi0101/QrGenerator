@@ -4,9 +4,10 @@ from django.core.files.base import ContentFile
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import segno
+from PIL import Image
+
 
 
 def home_page(request):
@@ -28,12 +29,13 @@ def create_project(request):
         date = timezone.datetime.now()
         title = request.POST.get('title')
         description = request.POST.get('description')
-        print('title is' + str(title) + 'and description is' + str(description))
+        link = request.POST.get('link')
+        print('title is ' + str(title) + '  description is ' + str(description) + ' and link is ' + str(link))
 
         if not title or not description:
             return render(request, 'hub.html', {'error': 'Title and description are required.'})
 
-        current_project = Project.objects.create(description=description, title=title, date=date)
+        current_project = Project.objects.create(description=description, title=title, date=date, link=link)
         current_user = request.user
         project_owner = Profile.objects.get(user=current_user)
         ProjectProfile.objects.create(owner=project_owner, project=current_project)
@@ -57,10 +59,16 @@ def edit_project(request, project_id):
     if request.method == 'POST':
         title = request.POST.get('title')
         description = request.POST.get('description')
+        link = request.POST.get('link')
 
-        if title and description:
-            project.title = title
-            project.description = description
+        if title or description or link:
+            if title:
+                project.title = title
+            if description:
+                project.description = description
+            if link:
+                project.link = link
+
             project.save()
             return redirect('mainApp:hub')
         else:
@@ -71,21 +79,48 @@ def edit_project(request, project_id):
 
 def create_qr(request, project_id):
     project = get_object_or_404(Project, id=project_id)
-    if request.method == 'POST':
-        site_link = request.POST.get('sitelink')
-        site_qr = segno.make(site_link)
-
-        qr_number = project.qr_number
-        project.qr_number += 1
-        project.save()
-
-        image_io = BytesIO()
-        site_qr.save(image_io, kind='png', scale=7)
-        image_io.seek(0)  # Reset del puntatore di lettura
-
-        image_filename = f'{project.title}_{qr_number}.png'
-
-        qr_instance = Qr(project=project)
-        qr_instance.image.save(image_filename, ContentFile(image_io.read()), save=True)
+    if request.method == 'GET':
+        return render(request, "QrMaker.html", context={'project': project})
 
     return redirect('mainApp:hub')
+
+
+def qr_maker(request, project_id):
+        print("entered qrmaker view")
+        project = get_object_or_404(Project, id=project_id)
+
+
+        if request.method == 'POST':
+            site_link = project.link
+            fg_color = request.POST.get('fg_color')
+            bg_color = request.POST.get('bg_color')
+            image = request.FILES.get('image')
+
+            print(f"site link is: {site_link} colors are: {fg_color}, {bg_color} image is: {image}")
+
+
+            site_qr = segno.make(site_link)
+
+            qr_number = project.qr_number
+            project.qr_number += 1
+            project.save()
+
+
+            if image:
+                image_file = Image.open(image)
+                site_qr = site_qr.to_artistic(background=image_file)
+
+
+            final_qr = site_qr.to_pil(scale=4, dark=fg_color, data_dark=fg_color, data_light=bg_color)
+
+            img = BytesIO()
+            final_qr.save(img, format='PNG')  # Specifica il formato
+            img.seek(0)  # Reset del puntatore di lettura
+
+            image_filename = f'{project.title}_{qr_number}.png'
+
+
+            qr_instance = Qr(project=project)
+            qr_instance.image.save(image_filename, ContentFile(img.read()), save=True)
+
+        return render(request, "hub.html", context={'project': project})
