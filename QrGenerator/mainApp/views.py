@@ -1,5 +1,6 @@
 from io import BytesIO
 
+import qrcode
 from django.core.files.base import ContentFile
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
@@ -7,6 +8,7 @@ from .models import *
 from django.shortcuts import render, redirect
 import segno
 from PIL import Image
+import io
 
 
 def home_page(request):
@@ -96,41 +98,25 @@ def qr_maker(request, project_id):
 
         print(f"site link is: {site_link} colors are: {fg_color}, {bg_color} image is: {image}")
 
+        qr = qrcode.QRCode(version=1,
+                           box_size=10,
+                           border=5)
 
-        site_qr = segno.make(site_link)
+        # Adding data to the instance 'qr'
+        qr.add_data(site_link)
 
-
-        qr_img = BytesIO()
-        site_qr.save(qr_img, kind='png', scale=10, data_dark=bg_color, dark="black", data_light=fg_color)
-        qr_img.seek(0)
-
-
-        qr_image = Image.open(qr_img)
-
-
-        if image:
-            background_image = Image.open(image)
-
-
-            background_image = background_image.resize(qr_image.size)
-
-
-            background_image.paste(qr_image, (0, 0), qr_image)
-
-            final_image = background_image
-        else:
-            final_image = qr_image
-
-
-        img = BytesIO()
-        final_image.save(img, format='PNG')
-        img.seek(0)
-
+        qr.make(fit=True)
+        img = qr.make_image(fill_color=fg_color,
+                            back_color=bg_color)
         image_filename = f'{project.title}_{project.qr_number}.png'
+
+        img_byte_arr = BytesIO()
+        img.save(img_byte_arr, format='JPEG')
+        img_byte_arr.seek(0)
 
 
         qr_instance = Qr(project=project)
-        qr_instance.image.save(image_filename, ContentFile(img.read()), save=True)
+        qr_instance.image.save(image_filename, ContentFile(img_byte_arr.read()) , save=True)
 
         project.qr_number += 1
         project.save()
