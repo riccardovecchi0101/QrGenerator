@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="container mt-5">
-        <form class="col-6 mx-auto card p-3 shadow-lg" method="POST">
+        <form class="col-6 mx-auto card p-3 shadow-lg" method="POST"  enctype="multipart/form-data" action="{% url 'mainApp:qr_maker' project.id %}">
             <h1 style="text-align: center;"><span style="color: #03adfc;">AImageLab QR GENERATOR</span></h1>
 
 
@@ -22,31 +22,29 @@
         <div class="bg-light flex-fill mb-3 mt-3">
             <ul class="list-group list-unstyled list-group-horizontal gap-3 align-items-end">
                 <li> <label> Module Color: </label></li>
-                <li><select  id="fg_selector" class="form-select" aria-label="Default select example">
-                    <option value="1">Red</option>
-                    <option value="2">Black</option>
-                    <option value="3">Blue</option>
-                    <option value="4">Green</option>
-                    <option value="5">Yellow</option>
-                    <option value="6">White</option>
-                    <option value="7">Orange</option>
-                    <option value="8">Purple</option>
-                    <option value="9">Pink</option>
-                    <option value="10">Brown</option>
+                <li><select  id="fg_selector" class="form-select" name="fg_color" aria-label="Default select">
+                    <option value="Black">Black</option>
+                    <option value="Red">Red</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Green">Green</option>
+                    <option value="Yellow">Yellow</option>
+                    <option value="Orange">Orange</option>
+                    <option value="Purple">Purple</option>
+                    <option value="Pink">Pink</option>
+                    <option value="Brown">Brown</option>
                     </select>
                 </li>
                 <li> <label > Background Color: </label></li>
-                <li><select id="bg-selector" class="form-select" aria-label="Default select example">
-                    <option value="1">Red</option>
-                    <option value="2">Black</option>
-                    <option value="3">Blue</option>
-                    <option value="4">Green</option>
-                    <option value="5">Yellow</option>
-                    <option value="6">White</option>
-                    <option value="7">Orange</option>
-                    <option value="8">Purple</option>
-                    <option value="9">Pink</option>
-                    <option value="10">Brown</option>
+                <li><select id="bg_selector" name ="bg_color" class="form-select" aria-label="Default select">
+                    <option value="Black">Black</option>
+                    <option value="Red">Red</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Green">Green</option>
+                    <option value="Yellow">Yellow</option>
+                    <option value="Orange">Orange</option>
+                    <option value="Purple">Purple</option>
+                    <option value="Pink">Pink</option>
+                    <option value="Brown">Brown</option>
                     </select>
                 </li>
             </ul>

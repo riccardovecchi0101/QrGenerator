@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', function () {
     qrMakerButton.addEventListener('click', function (event) {
         //event.preventDefault();  // Previene il comportamento di submit predefinito
 
-        const fg_color = document.getElementById('fg-selector').value;
-        const bg_color = document.getElementById('bg-selector').value;
+        const fg_color = document.getElementById('fg_selector').value;
+        const bg_color = document.getElementById('bg_selector').value;
         const fileInput = document.getElementById('imageUpload');
         const file = fileInput.files[0]; // Ottieni il primo file selezionato
         const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;

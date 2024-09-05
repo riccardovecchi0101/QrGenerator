@@ -9,7 +9,6 @@ import segno
 from PIL import Image
 
 
-
 def home_page(request):
     return render(request, "home.html")
 
@@ -86,41 +85,60 @@ def create_qr(request, project_id):
 
 
 def qr_maker(request, project_id):
-        print("entered qrmaker view")
-        project = get_object_or_404(Project, id=project_id)
+    print("entered qrmaker view")
+    project = get_object_or_404(Project, id=project_id)
+
+    if request.method == 'POST':
+        site_link = project.link
+        fg_color = request.POST.get('fg_color')
+        bg_color = request.POST.get('bg_color')
+        image = request.FILES.get('image')
+
+        print(f"site link is: {site_link} colors are: {fg_color}, {bg_color} image is: {image}")
 
 
-        if request.method == 'POST':
-            site_link = project.link
-            fg_color = request.POST.get('fg_color')
-            bg_color = request.POST.get('bg_color')
-            image = request.FILES.get('image')
-
-            print(f"site link is: {site_link} colors are: {fg_color}, {bg_color} image is: {image}")
+        site_qr = segno.make(site_link)
 
 
-            site_qr = segno.make(site_link)
-
-            qr_number = project.qr_number
-            project.qr_number += 1
-            project.save()
+        qr_img = BytesIO()
+        site_qr.save(qr_img, kind='png', scale=10, data_dark=bg_color, dark="black", data_light=fg_color)
+        qr_img.seek(0)
 
 
-            if image:
-                image_file = Image.open(image)
-                site_qr = site_qr.to_artistic(background=image_file)
+        qr_image = Image.open(qr_img)
 
 
-            final_qr = site_qr.to_pil(scale=4, dark=fg_color, data_dark=fg_color, data_light=bg_color)
-
-            img = BytesIO()
-            final_qr.save(img, format='PNG')  # Specifica il formato
-            img.seek(0)  # Reset del puntatore di lettura
-
-            image_filename = f'{project.title}_{qr_number}.png'
+        if image:
+            background_image = Image.open(image)
 
 
-            qr_instance = Qr(project=project)
-            qr_instance.image.save(image_filename, ContentFile(img.read()), save=True)
+            background_image = background_image.resize(qr_image.size)
 
-        return render(request, "hub.html", context={'project': project})
+
+            background_image.paste(qr_image, (0, 0), qr_image)
+
+            final_image = background_image
+        else:
+            final_image = qr_image
+
+
+        img = BytesIO()
+        final_image.save(img, format='PNG')
+        img.seek(0)
+
+        image_filename = f'{project.title}_{project.qr_number}.png'
+
+
+        qr_instance = Qr(project=project)
+        qr_instance.image.save(image_filename, ContentFile(img.read()), save=True)
+
+        project.qr_number += 1
+        project.save()
+
+    return redirect("mainApp:hub")
+
+
+def redirect_to_site(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+    redirect(project.link)
+
