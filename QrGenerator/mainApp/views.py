@@ -1,3 +1,4 @@
+import os
 from io import BytesIO
 
 import qrcode
@@ -50,8 +51,15 @@ def create_project(request):
 
 def delete_project(request, project_id):
     project = get_object_or_404(Project, id=project_id)
-
     if request.method == 'POST':
+        qr_list = []
+
+        for qr in Qr.objects.filter(project=project):
+            qr_list.append(qr)
+
+        for qr in qr_list:
+            os.remove(qr.image.path)
+
         project.delete()
         return redirect('mainApp:hub')
 
@@ -102,11 +110,10 @@ def qr_maker(request, project_id):
 
         print(f"site link is: {site_link} colors are: {fg_color}, {bg_color} image is: {image}")
 
-        qr = qrcode.QRCode(version=1,
+        qr = qrcode.QRCode(version=5,
                            box_size=10,
                            error_correction=qrcode.constants.ERROR_CORRECT_H,
                            border=5)
-
 
         qr.add_data(site_link)
 
@@ -115,24 +122,21 @@ def qr_maker(request, project_id):
                             back_color=bg_color)
 
         if image:
-            # Apri l'immagine caricata come sticker
-            sticker = Image.open(image)  # L'immagine dello sticker caricata dall'utente
+            # Apri il logo e assicurati che sia in formato RGBA (che supporta la trasparenza)
+            logo = Image.open(image).convert("RGBA")
 
-            # Ottieni la larghezza e altezza del QR code
-            qr_width, qr_height = img.size
+            # Ridimensiona il logo se necessario
+            logo = logo.resize((200, 200), Image.LANCZOS)
 
-            # Ridimensiona lo sticker in modo che sia il 20% delle dimensioni del QR code
-            sticker_size = int(qr_width * 0.2)
-            sticker = sticker.resize((sticker_size, sticker_size), Image.Resampling.LANCZOS)
+            # Dimensioni del QR code
+            img_w, img_h = img.size
+            logo_w, logo_h = logo.size
 
-            # Calcola la posizione per incollare lo sticker al centro del QR code
-            pos = ((qr_width - sticker.size[0]) // 2, (qr_height - sticker.size[1]) // 2)
+            # Calcola la posizione per centrare il logo sul QR code
+            pos = ((img_w - logo_w) // 2, (img_h - logo_h) // 2)
 
-            # Incolla lo sticker sopra il QR code. Se ha trasparenza (canale alfa), questa viene mantenuta
-            if sticker.mode == 'RGBA':
-                img.paste(sticker, pos, mask=sticker)  # Utilizza il canale alfa come maschera
-            else:
-                img.paste(sticker, pos)  # Se
+            # Incolla il logo sul QR code utilizzando il canale alpha (trasparenza)
+            img.paste(logo, pos, logo)  # Il terzo parametro 'logo' usa il canale alpha
 
         image_filename = f'{project.title}_{project.qr_number}.png'
 
@@ -140,9 +144,8 @@ def qr_maker(request, project_id):
         img.save(img_byte_arr, format='JPEG')
         img_byte_arr.seek(0)
 
-
         qr_instance = Qr(project=project)
-        qr_instance.image.save(image_filename, ContentFile(img_byte_arr.read()) , save=True)
+        qr_instance.image.save(image_filename, ContentFile(img_byte_arr.read()), save=True)
 
         project.qr_number += 1
         project.save()
@@ -154,3 +157,14 @@ def redirect_to_site(request, project_id):
     project = get_object_or_404(Project, id=project_id)
     redirect(project.link)
 
+
+def qr_deleter(request, qr_id):
+    qr = get_object_or_404(Qr, id=qr_id)
+    if request.method == "POST":
+        qr.project.qr_number -= 1
+        qr.project.save()
+        os.remove(qr.image.path)
+        qr.delete()
+        return redirect('mainApp:hub')
+
+    return render(request, 'hub.html')

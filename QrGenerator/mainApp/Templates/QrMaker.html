@@ -37,10 +37,10 @@
                 </li>
                 <li> <label > Background Color: </label></li>
                 <li><select id="bg_selector" name ="bg_color" class="form-select" aria-label="Default select">
+                    <option value="White">White</option>
                     <option value="Black">Black</option>
                     <option value="Red">Red</option>
                     <option value="Blue">Blue</option>
-                    <option value="White">White</option>
                     <option value="Green">Green</option>
                     <option value="Yellow">Yellow</option>
                     <option value="Orange">Orange</option>
@@ -49,6 +49,7 @@
                     <option value="Brown">Brown</option>
                     </select>
                 </li>
+                <li> <label style="color:red;"> Colours should be different</label></li>
             </ul>
             <ul class="list-group list-unstyled list-group-horizontal mt-5 gap-3 align-items-end">
                 <li><label for="imageUpload">upload Image (optional):</label></li>
@@ -62,6 +63,7 @@
          </script>
              {% csrf_token %}
          <button type="submit" id="submitQR" class="btn btn-outline-primary mt-3">Submit</button>
+         <button type="submit" id="reviewQR" class="btn btn-outline-primary mt-3">Review</button>
 
         </form>
     </div>
