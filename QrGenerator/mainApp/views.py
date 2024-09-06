@@ -20,9 +20,13 @@ def hub_page(request):
     user_profile = Profile.objects.get(user=current_user)
     my_projects = ProjectProfile.objects.filter(owner=user_profile)
     projects = [profile.project for profile in my_projects]
-    qrs = Qr.objects.all()
 
-    return render(request, "hub.html", {'projects': projects, 'qrs': qrs})
+    qr_list = []
+    for project in projects:
+        for qr in Qr.objects.filter(project=project):
+            qr_list.append(qr)
+
+    return render(request, "hub.html", {'projects': projects, 'qrs': qr_list})
 
 
 def create_project(request):
@@ -100,14 +104,36 @@ def qr_maker(request, project_id):
 
         qr = qrcode.QRCode(version=1,
                            box_size=10,
+                           error_correction=qrcode.constants.ERROR_CORRECT_H,
                            border=5)
 
-        # Adding data to the instance 'qr'
+
         qr.add_data(site_link)
 
         qr.make(fit=True)
         img = qr.make_image(fill_color=fg_color,
                             back_color=bg_color)
+
+        if image:
+            # Apri l'immagine caricata come sticker
+            sticker = Image.open(image)  # L'immagine dello sticker caricata dall'utente
+
+            # Ottieni la larghezza e altezza del QR code
+            qr_width, qr_height = img.size
+
+            # Ridimensiona lo sticker in modo che sia il 20% delle dimensioni del QR code
+            sticker_size = int(qr_width * 0.2)
+            sticker = sticker.resize((sticker_size, sticker_size), Image.Resampling.LANCZOS)
+
+            # Calcola la posizione per incollare lo sticker al centro del QR code
+            pos = ((qr_width - sticker.size[0]) // 2, (qr_height - sticker.size[1]) // 2)
+
+            # Incolla lo sticker sopra il QR code. Se ha trasparenza (canale alfa), questa viene mantenuta
+            if sticker.mode == 'RGBA':
+                img.paste(sticker, pos, mask=sticker)  # Utilizza il canale alfa come maschera
+            else:
+                img.paste(sticker, pos)  # Se
+
         image_filename = f'{project.title}_{project.qr_number}.png'
 
         img_byte_arr = BytesIO()

@@ -4,6 +4,8 @@
 
 <head>
     {% load static %}
+    {% load mathfilters %}
+
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width,
@@ -121,29 +123,34 @@
                             <form method="GET" action="{% url 'mainApp:create_qr' project.id %}">
                                 {% csrf_token %}
                                 <ul class="list-group list-unstyled list-group-horizontal gap-3">
-                                    <li><button type="submit"  class="btn btn-lg btn-outline-dark">Add QR</button></li>
+                                    <li><button type="submit"  class="btn btn-lg btn-outline-dark" {% if project.qr_number >= 5 %} disabled {% endif %}">Add QR</button></li>
                                 </ul>
                             </form>
-                        <l1/>
+                        <li/>
+
+                        <li> <label> You can add {{ 5|sub:project.qr_number }} Qrs</label></li>
 
 
                   <li class="ms-auto">
          <!-- Carousel -->
-                    <div id="carousel{{ forloop.counter }}" class="carousel slide" data-bs-interval="false" style="width: 100px; height: 100px;">
+                      <div id="carouselProject{{ project.id }}" class="carousel slide" data-bs-interval="false" style="width: 200px; height: 200px;">
                         <div class="carousel-inner">
-                            {% for qr in qrs %}
-                                {% if qr.project_id == project.id %}
-                                    <div class="carousel-item active border border-3 border-dark rounded">
-                                        <img src="{{ qr.image.url }}"class="d-block w-100" alt="not found">
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
+                                {% for qr in qrs %}
+                                    {% if qr.project.id == project.id %}
+
+                                        <div class="carousel-item border border-3 border-dark rounded">
+                                           <img src="{{ qr.image.url }}" class="d-block w-100" alt="QR Code">
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ forloop.counter }}" data-bs-slide="prev">
+
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProject{{ project.id }}" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(100%);"></span>
                             <span class="visually-hidden">Previous</span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ forloop.counter }}" data-bs-slide="next">
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselProject{{ project.id }}" data-bs-slide="next">
                             <span class="carousel-control-next-icon" style="filter: invert(100%);" aria-hidden="true"></span>
                         </button>
                     </div>
@@ -222,12 +229,38 @@
 
 
 </body>
+<!--    CODICE PER FIXARE I CAROSELLI  -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
 
-<script type="text/javascript">
-    function confirmDelete() {
-        return confirm('Are you sure you want to delete this project? This action cannot be undone.');
-    }
+    var carousels = document.querySelectorAll('.carousel');
+
+    carousels.forEach(function(carousel) {
+
+        var items = carousel.querySelectorAll('.carousel-item');
+
+
+        if (items.length > 0) {
+
+            items.forEach(function(item) {
+                item.classList.remove('active');
+            });
+
+
+            items[0].classList.add('active');
+        }
+    });
+});
 </script>
+    <!---DELETE BUTTON **/-->
+<script>
+       function confirmDelete() {
+        return confirm('Are you sure you want to delete this project? This action cannot be undone.');
+}</script>
+
+</script>
+
+
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
