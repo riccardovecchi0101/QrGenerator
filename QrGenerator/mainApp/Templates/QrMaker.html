@@ -49,7 +49,6 @@
                     <option value="Brown">Brown</option>
                     </select>
                 </li>
-                <li> <label style="color:red;"> Colours should be different</label></li>
             </ul>
             <ul class="list-group list-unstyled list-group-horizontal mt-5 gap-3 align-items-end">
                 <li><label for="imageUpload">upload Image (optional):</label></li>
@@ -57,18 +56,21 @@
             </ul>
         </div>
 
-         <script>
-             const qrMakerUrl = "{% url 'mainApp:qr_maker' project.id %}";
-             console.log('QR Maker URL:', qrMakerUrl); // Verifica l'URL nella console
-         </script>
              {% csrf_token %}
-         <button type="submit" id="submitQR" class="btn btn-outline-primary mt-3">Submit</button>
-         <button type="submit" id="reviewQR" class="btn btn-outline-primary mt-3">Review</button>
+          <ul class="list-group list-unstyled list-group-horizontal gap-3 align-items-end">
+             <li><button type="submit" id="submitQR" class="btn btn-outline-primary mt-3">Submit</button></li>
+             <li><button id="prevQr" type="button" class="btn btn-outline-primary"> Preview </button></li>
+             <li><img id="qrPreview" src="" style="display:none; width:200px; height:200px;" alt="QR Code Preview"></li>
+          </ul>
 
         </form>
     </div>
 </body>
 
 <script src="{% static 'script.js' %}"></script>
+    <script>
+     const qrMakerUrl = "{% url 'mainApp:qr_maker' project.id %}";
+     console.log('QR Maker URL:', qrMakerUrl); // Verifica l'URL nella console
+</script>
 
 </html>

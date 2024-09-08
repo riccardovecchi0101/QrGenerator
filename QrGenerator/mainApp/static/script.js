@@ -70,10 +70,23 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    const prevButton = document.getElementById('prevQr');
     const qrMakerButton = document.getElementById('submitQR');
-    qrMakerButton.addEventListener('click', function (event) {
-        //event.preventDefault();  // Previene il comportamento di submit predefinito
 
+
+    prevButton.addEventListener('click', function(event){
+
+    });
+
+    qrMakerButton.addEventListener('click', function(event){
+        sendQr("true");
+    });
+});
+
+
+function sendQr(preview){
+        //event.preventDefault();  // Previene il comportamento di submit predefinito
+        const preview_value = preview;
         const fg_color = document.getElementById('fg_selector').value;
         const bg_color = document.getElementById('bg_selector').value;
         const fileInput = document.getElementById('imageUpload');
@@ -84,8 +97,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (file) {
             formData.append('image', file); // Aggiungi il file al FormData
         }
+        formData.append('preview', preview)
         formData.append('fg_color', fg_color); // Aggiungi il titolo
         formData.append('bg_color', bg_color); // Aggiungi la descrizione
+
+        for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+    }
 
         // Invia una richiesta POST con fetch
         fetch(qrMakerUrl, { // Sostituisci con l'URL del tuo endpoint
@@ -103,5 +121,6 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch((error) => {
             console.error('Error:', error);
         });
-    });
-});
+
+}
+

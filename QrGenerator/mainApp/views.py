@@ -3,6 +3,7 @@ from io import BytesIO
 
 import qrcode
 from django.core.files.base import ContentFile
+from django.http import JsonResponse
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
@@ -107,8 +108,10 @@ def qr_maker(request, project_id):
         fg_color = request.POST.get('fg_color')
         bg_color = request.POST.get('bg_color')
         image = request.FILES.get('image')
+        preview = request.POST.get('preview')
+        return JsonResponse({'preview': preview})
 
-        print(f"site link is: {site_link} colors are: {fg_color}, {bg_color} image is: {image}")
+        print(f"site link is: {site_link} colors are: {fg_color}, {bg_color} image is: {image} preview is {preview}")
 
         qr = qrcode.QRCode(version=5,
                            box_size=10,
@@ -119,24 +122,20 @@ def qr_maker(request, project_id):
 
         qr.make(fit=True)
         img = qr.make_image(fill_color=fg_color,
-                            back_color=bg_color)
+                            back_color=bg_color).convert('RGB')
 
         if image:
-            # Apri il logo e assicurati che sia in formato RGBA (che supporta la trasparenza)
-            logo = Image.open(image).convert("RGBA")
+            logo = Image.open(image)
 
-            # Ridimensiona il logo se necessario
-            logo = logo.resize((200, 200), Image.LANCZOS)
+            basewidth = 100
 
-            # Dimensioni del QR code
-            img_w, img_h = img.size
-            logo_w, logo_h = logo.size
+            logo = logo.resize((150, 150))
 
-            # Calcola la posizione per centrare il logo sul QR code
-            pos = ((img_w - logo_w) // 2, (img_h - logo_h) // 2)
 
-            # Incolla il logo sul QR code utilizzando il canale alpha (trasparenza)
-            img.paste(logo, pos, logo)  # Il terzo parametro 'logo' usa il canale alpha
+            pos = ((img.size[0] - logo.size[0]) // 2,
+                   (img.size[1] - logo.size[1]) // 2)
+
+            img.paste(logo, pos)
 
         image_filename = f'{project.title}_{project.qr_number}.png'
 
