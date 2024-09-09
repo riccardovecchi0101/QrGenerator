@@ -22,7 +22,7 @@
 
 </head>
 
-<body>
+<body class="hub_page">
 
 <div class="container-fluid d-flex">
   <nav id="simple_navbar" class="navbar fixed-top navbar-light bg-primary px-3">
@@ -226,7 +226,7 @@
               <label for="site_link" class="form-label">link to site:</label>
               <input type="text" id="site_link" class="form-control" aria-describedby="passwordHelpBlock">
               <script> const projectCreatorUrl = "{% url 'mainApp:project_creator' %}";</script>
-              <button type="submit" class="btn btn-primary mt-3" id="submit-button">Submit</button>
+              <button id="submit-button" type="submit" class="btn btn-primary mt-3" id="submit-button">Submit</button>
           </form>
       </div>
     </div>
@@ -236,7 +236,7 @@
 
 
 
-</body>
+
 <!--    CODICE PER FIXARE I CAROSELLI  -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -284,6 +284,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+</body>
 
 </html>
 

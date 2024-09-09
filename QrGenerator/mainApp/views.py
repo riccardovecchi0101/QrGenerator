@@ -1,9 +1,10 @@
 import os
 from io import BytesIO
 
+import django.http
 import qrcode
 from django.core.files.base import ContentFile
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
@@ -48,6 +49,8 @@ def create_project(request):
         ProjectProfile.objects.create(owner=project_owner, project=current_project)
 
         return render(request, 'hub.html', {'project': current_project})
+
+
 
 
 def delete_project(request, project_id):
@@ -107,9 +110,9 @@ def qr_maker(request, project_id):
         site_link = project.link
         fg_color = request.POST.get('fg_color')
         bg_color = request.POST.get('bg_color')
-        image = request.FILES.get('image')
         preview = request.POST.get('preview')
-        return JsonResponse({'preview': preview})
+        value = request.POST.get('value')
+        image = request.FILES.get('image')
 
         print(f"site link is: {site_link} colors are: {fg_color}, {bg_color} image is: {image} preview is {preview}")
 
@@ -142,6 +145,11 @@ def qr_maker(request, project_id):
         img_byte_arr = BytesIO()
         img.save(img_byte_arr, format='JPEG')
         img_byte_arr.seek(0)
+
+        if preview:
+            response = HttpResponse(img_byte_arr, content_type='image/png')
+            response['Content-Disposition'] = 'inline'; filename="qrcode.png"
+            return response
 
         qr_instance = Qr(project=project)
         qr_instance.image.save(image_filename, ContentFile(img_byte_arr.read()), save=True)
