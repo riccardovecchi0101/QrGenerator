@@ -9,9 +9,7 @@ from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.shortcuts import render, redirect
-import segno
-from PIL import Image
-import io
+from PIL import Image, ImageEnhance
 
 
 def home_page(request):
@@ -125,12 +123,20 @@ def qr_maker(request, project_id):
 
         qr.make(fit=True)
         img = qr.make_image(fill_color=fg_color,
-                            back_color=bg_color).convert('RGB')
+                            back_color=bg_color).convert('RGBA')
+
 
         if image:
-            logo = Image.open(image)
+            logo = Image.open(image).convert("RGBA")
 
-            basewidth = 100
+            # Ottieni il canale alfa del logo
+            alpha = logo.getchannel('A')
+
+            # Modifica il valore del canale alfa per aumentare l'opacità
+            alpha = alpha.point(
+                lambda p: min(255, int(p * 10.0)))  # Raddoppia l'opacità, assicurandosi che non superi 255
+            logo.putalpha(alpha)
+
 
             logo = logo.resize((150, 150))
 
@@ -138,12 +144,12 @@ def qr_maker(request, project_id):
             pos = ((img.size[0] - logo.size[0]) // 2,
                    (img.size[1] - logo.size[1]) // 2)
 
-            img.paste(logo, pos)
+            img.paste(logo, pos, logo)
 
         image_filename = f'{project.title}_{project.qr_number}.png'
 
         img_byte_arr = BytesIO()
-        img.save(img_byte_arr, format='JPEG')
+        img.save(img_byte_arr, format='PNG')
         img_byte_arr.seek(0)
 
         if preview:
