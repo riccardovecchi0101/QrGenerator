@@ -5,10 +5,10 @@ import django.http
 import qrcode
 from django.core.files.base import ContentFile
 from django.http import JsonResponse, HttpResponse
+from django.urls import reverse
 from django.utils import timezone
-from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from PIL import Image, ImageEnhance
 
 
@@ -36,6 +36,8 @@ def create_project(request):
         title = request.POST.get('title')
         description = request.POST.get('description')
         link = request.POST.get('link')
+        if not link.startswith(('http://', 'https://')):
+            link = 'https://' + link
         print('title is ' + str(title) + '  description is ' + str(description) + ' and link is ' + str(link))
 
         if not title or not description:
@@ -105,12 +107,19 @@ def qr_maker(request, project_id):
     project = get_object_or_404(Project, id=project_id)
 
     if request.method == 'POST':
-        site_link = project.link
         fg_color = request.POST.get('fg_color')
         bg_color = request.POST.get('bg_color')
         preview = request.POST.get('preview')
         value = request.POST.get('value')
         image = request.FILES.get('image')
+
+        if not preview:
+            link = reverse('mainApp:real_site', kwargs={'project_id': project_id})
+            url = request.build_absolute_uri(link)
+            site_link = url
+
+        else:
+            site_link = ''
 
         print(f"site link is: {site_link} colors are: {fg_color}, {bg_color} image is: {image} preview is {preview}")
 
@@ -181,3 +190,11 @@ def qr_deleter(request, qr_id):
         return redirect('mainApp:hub')
 
     return render(request, 'hub.html')
+
+
+def real_site(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+    project.total_times_scanned += 1
+    project.save()
+    redirect(project.link)
+

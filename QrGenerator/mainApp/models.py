@@ -17,6 +17,7 @@ class Project(models.Model):
     description = models.CharField(max_length=1000)
     collaborators = models.ManyToManyField(Profile)
     qr_number = models.SmallIntegerField(default=0)
+    total_times_scanned = models.IntegerField(default = 0)
 
 
 class ProjectProfile(models.Model):
@@ -27,4 +28,5 @@ class ProjectProfile(models.Model):
 class Qr(models.Model):
     id = models.AutoField(primary_key=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    times_scanned = models.IntegerField(default=0)
     image = ResizedImageField(size=[500, 500], upload_to='images/', blank=True, null=True)
