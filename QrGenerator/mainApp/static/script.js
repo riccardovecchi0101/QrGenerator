@@ -46,6 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const fg_color = document.getElementById('fg_selector').value;
             const bg_color = document.getElementById('bg_selector').value;
             const fileInput = document.getElementById('imageUpload');
+            const labelLogo = document.getElementById('inputTextLogo').value;
+            const labelColor = document.getElementById('textColor').value;
             const file = fileInput.files[0]; // Ottieni il primo file selezionato
             const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
@@ -54,6 +56,8 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('preview', true);
             formData.append('fg_color', fg_color); // Aggiungi il titolo
             formData.append('bg_color', bg_color); // Aggiungi la descrizione
+            formData.append('LabelLogo', labelLogo);
+            formData.append('LabelColor', labelColor);
 
             if (file) {
                 formData.append('image', file); // Aggiungi il file al FormData

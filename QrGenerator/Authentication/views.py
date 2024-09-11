@@ -44,6 +44,7 @@ def register_page(request):
         last_name = request.POST.get('last_name')
         username = request.POST.get('username')
         password = request.POST.get('password')
+        email = request.POST.get('email')
 
         # Check if a user with the provided username already exists
         user = User.objects.filter(username=username)
@@ -57,7 +58,8 @@ def register_page(request):
         user = User.objects.create_user(
             first_name=first_name,
             last_name=last_name,
-            username=username
+            username=username,
+            email=email
         )
 
         Profile.objects.create(user=user)

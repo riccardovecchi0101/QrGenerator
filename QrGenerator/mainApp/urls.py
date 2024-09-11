@@ -6,6 +6,7 @@ app_name = 'mainApp'
 urlpatterns = [
     path('', views.home_page, name='home'),
     path('hub/', views.hub_page, name='hub'),
+    path('hub/logout', views.logout_view, name='logout'),
     path('create/', views.create_project, name='project_creator'),
     path('edit/<int:project_id>/', views.edit_project, name='edit_project'),
     path('delete/<int:project_id>/', views.delete_project, name='delete_project'),

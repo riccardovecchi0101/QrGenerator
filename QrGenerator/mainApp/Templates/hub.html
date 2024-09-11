@@ -33,11 +33,15 @@
        <a class="nav-link text-white" href="https://github.com/riccardovecchi0101/QrGenerator"><i class="bi bi-github"></i></a>
     </li>
     <li class="nav-item">
-                <a class="nav-link text-white"  href="#" data-toggle="modal" data-target="#userModal">
-                    <i class="fa-regular fa-user"></i>
-                    Profile
-                </a>
-            </li>
+        <a class="nav-link text-white"  href="#" data-toggle="modal" data-target="#userModal">
+            <i class="fa-regular fa-user"></i>
+            Profile
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-white" href="{% url 'mainApp:logout' %}"> Logout </a>
+    </li>
+
     </ul>
     </nav>
     </div>

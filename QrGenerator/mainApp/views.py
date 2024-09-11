@@ -3,17 +3,24 @@ from io import BytesIO
 
 import django.http
 import qrcode
+from PIL.ImageDraw import ImageDraw
+from django.contrib.auth import logout
 from django.core.files.base import ContentFile
 from django.http import JsonResponse, HttpResponse
 from django.urls import reverse
 from django.utils import timezone
 from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
-from PIL import Image, ImageEnhance
+from PIL import Image, ImageDraw, ImageFont
 
 
 def home_page(request):
     return render(request, "home.html")
+
+
+def logout_view(request):
+    logout(request);
+    return redirect('mainApp:home')
 
 
 def hub_page(request):
@@ -112,16 +119,19 @@ def qr_maker(request, project_id):
         preview = request.POST.get('preview')
         value = request.POST.get('value')
         image = request.FILES.get('image')
+        label = request.POST.get('LabelLogo')
+        color = request.POST.get('LabelColor')
 
         if not preview:
             link = reverse('mainApp:real_site', kwargs={'project_id': project_id})
             url = request.build_absolute_uri(link)
             site_link = url
+            site_link = project.link
 
         else:
             site_link = ''
 
-        print(f"site link is: {site_link} colors are: {fg_color}, {bg_color} image is: {image} preview is {preview}")
+        print(f"site link is: {site_link} colors are: {fg_color}, {bg_color} image is: {image} preview is {preview} label is {label} color is {color}")
 
         qr = qrcode.QRCode(version=5,
                            box_size=10,
@@ -135,7 +145,17 @@ def qr_maker(request, project_id):
                             back_color=bg_color).convert('RGBA')
 
 
-        if image:
+        if label:
+            if not color: color = 'black'
+            label_image = create_text_image(label, text_color=color)
+
+            pos = ((img.size[0] - label_image.size[0]) // 2,
+                   (img.size[1] - label_image.size[1]) // 2)
+
+            img.paste(label_image, pos)
+
+
+        elif image:
             logo = Image.open(image).convert("RGBA")
 
             # Ottieni il canale alfa del logo
@@ -196,5 +216,38 @@ def real_site(request, project_id):
     project = get_object_or_404(Project, id=project_id)
     project.total_times_scanned += 1
     project.save()
-    redirect(project.link)
+    return redirect(project.link)
 
+
+
+def create_text_image(text,  text_color, font_size=40, image_size=(300, 100)):
+    """
+    Crea un'immagine contenente solo il testo, con sfondo trasparente.
+
+    :param text: Testo da scrivere nell'immagine.
+    :param font_size: Dimensione del font.
+    :param image_size: Dimensioni dell'immagine (larghezza, altezza).
+    :param text_color: Colore del testo in formato RGBA.
+    :return: Oggetto immagine PIL.
+    """
+    # Crea un'immagine con sfondo trasparente (RGBA)
+    img = Image.new('RGBA', image_size, (255, 255, 255, 0))  # Trasparenza totale con (A=0)
+
+    # Carica un font predefinito
+    try:
+        font = ImageFont.truetype("arial.ttf", font_size)
+    except IOError:
+        font = ImageFont.load_default()
+
+
+    draw = ImageDraw.Draw(img)
+
+
+    bbox = draw.textbbox((0, 0), text, font=font)
+    text_width, text_height = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    position = ((image_size[0] - text_width) // 2, (image_size[1] - text_height) // 2)
+
+
+    draw.text(position, text, font=font, fill=text_color)
+
+    return img

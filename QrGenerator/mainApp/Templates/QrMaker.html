@@ -54,6 +54,14 @@
                 <li><label for="imageUpload">upload Image (optional):</label></li>
                 <li><input  class="form-control" type="file" id="imageUpload" name="image" accept=".png, .jpg, .jpeg, gif"></li>
             </ul>
+            <div class="mt-3"><h1 style="color:red;">OR</h1></div>
+
+            <ul class="list-group list-unstyled list-group-horizontal mt-5 gap-3 align-items-end">
+                <li><label for="inputTextLogo">Add text (optional):</label></li>
+                <li><input  class="form-control" type="text" id="inputTextLogo" maxlength="11" name="LabelLogo"></li>
+                <li><label for="textColor"> label color</label></li>
+                <li><input class="form-control" type="text" id="textColor" name="LabelColor" maxlength="10"></li>
+            </ul>
 
                 {% csrf_token %}
           <ul class="list-group list-unstyled list-group-horizontal gap-3 align-items-end mt-3">
