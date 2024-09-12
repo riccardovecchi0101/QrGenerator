@@ -143,12 +143,12 @@
                                     {% if qr.project.id == project.id %}
 
                                         <div class="carousel-item border border-3 border-dark rounded mb-3">
-                                           <ul class="list-unstyled p-3">
-                                               <li><img src="{{ qr.image.url }}" class="d-block w-100" alt="QR Code"></li>
+                                           <ul class="list-unstyled p-1">
+                                               <li><img src="{{ qr.image.url }}" class="img-fluid" alt="QR Code"></li>
                                                <li class="mt-3">
                                                     <form method="POST" action="{% url 'mainApp:qr_deleter' qr.id %}" onsubmit="return confirmDeleteQr();">
                                                          {% csrf_token %}
-                                                        <button id ="delete{{project.id}}{{qr.id}}" class="btn btn-outline-danger mx-auto" type="submit" href="#"><i>Delete QR</i></button>
+                                                        <button id ="delete{{project.id}}{{qr.id}}" class="btn btn-outline-danger" type="submit" href="#"><i>Delete QR</i></button>
                                                     </form>
                                                </li>
                                            </ul>
@@ -166,16 +166,16 @@
                             <span class="carousel-control-next-icon" style="filter: invert(100%);" aria-hidden="true"></span>
                         </button>
                     </div>
-                </li>
+                    </li>
 
                     </ul>
-                    <div class="mt-3"><p> total times scanned: {{ project.total_times_scanned }}</p></div>
+                    <div class="mt-3"><a href="{% url 'mainApp:project_info' project.id %}">PROJECT INFO</a></div>
                         {% endfor %}
-                </div>
+                 </div>
             </div>
     <div class="navbar navbar-expand-lg navbar-light fixed-bottom"  style="background-color: #ECECEC;">
   <div class="container">
-    <div class="font-italic" style="horiz-align: left;">Powered by <a target="_blank" href="http://imagelab.ing.unimore.it">
+    <div class="font-italic d-none d-sm-block" style="horiz-align: left;">Powered by <a target="_blank" href="http://imagelab.ing.unimore.it">
             <img src="{% static 'aimagelab.png' %}" height="25" alt="AImageLab"></a>
     </div>
     <div class="font-italic" style="float: right !important;">Designed by <a href="http://federicobolelli.it" target="_blank">F. Bolelli</a> and   <a href="https://github.com/riccardovecchi0101" target="_blank"> R. Vecchi </a>, managed by <a href="http://federicobolelli.it" target="_blank">F. Bolelli</a>

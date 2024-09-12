@@ -13,6 +13,7 @@ urlpatterns = [
     path('qr/<int:project_id>/', views.create_qr, name='create_qr'),
     path('qr/<int:project_id>/maker/', views.qr_maker, name='qr_maker'),
     path('qr/<int:qr_id>/deleter', views.qr_deleter, name='qr_deleter'),
-    path('qr/<int:project_id>/redirect_to_site', views.redirect_to_site, name='real_site')
+    path('qr/<int:project_id>/<int:qr_id>/redirect_to_site', views.redirect_to_site, name='real_site'),
+    path('<int:project_id>/project_info', views.project_info, name='project_info')
 ]
 

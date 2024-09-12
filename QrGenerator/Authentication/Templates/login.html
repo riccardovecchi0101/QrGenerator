@@ -47,7 +47,13 @@
             <p>Don't have an account <a href="{% url 'authentication:register' %}">Register</a> </p>
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-outline-primary">Submit</button>
+            <ul class="list-group list-unstyled list-group-horizontal gap-3 align-items-end mt-3">
+                <li><button type="submit" class="btn btn-outline-primary">Submit</button></li>
+                  <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="rememberMe">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Remember me</label>
+                  </div>
+            </ul>
         </form>
     </div>
 </body>

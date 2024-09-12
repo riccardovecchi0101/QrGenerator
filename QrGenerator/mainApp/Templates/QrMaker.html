@@ -60,7 +60,19 @@
                 <li><label for="inputTextLogo">Add text (optional):</label></li>
                 <li><input  class="form-control" type="text" id="inputTextLogo" maxlength="11" name="LabelLogo"></li>
                 <li><label for="textColor"> label color</label></li>
-                <li><input class="form-control" type="text" id="textColor" name="LabelColor" maxlength="10"></li>
+                <li><select  id="textColor" class="form-select" name="LabelColor" aria-label="Default select">
+                    <option value="Black">Black</option>
+                    <option value="Red">Red</option>
+                    <option value="White">White</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Green">Green</option>
+                    <option value="Yellow">Yellow</option>
+                    <option value="Orange">Orange</option>
+                    <option value="Purple">Purple</option>
+                    <option value="Pink">Pink</option>
+                    <option value="Brown">Brown</option>
+                    </select>
+                </li>
             </ul>
 
                 {% csrf_token %}

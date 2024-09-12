@@ -3,9 +3,10 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django_resized import ResizedImageField
 
+
 class Profile(models.Model):
     user = models.OneToOneField(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,
         primary_key=True,
     )
