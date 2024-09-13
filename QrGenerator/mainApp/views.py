@@ -20,7 +20,7 @@ def home_page(request):
 
 
 def logout_view(request):
-    logout(request);
+    logout(request)
     return redirect('mainApp:home')
 
 
@@ -198,7 +198,9 @@ def qr_maker(request, project_id):
 
 
 def redirect_to_site(request, project_id, qr_id):
+
     project = get_object_or_404(Project, id=project_id)
+    print(project.link)
     project.total_times_scanned += 1
     project.save()
 
