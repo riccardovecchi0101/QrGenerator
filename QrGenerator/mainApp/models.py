@@ -16,8 +16,11 @@ class Project(models.Model):
     title = models.CharField(max_length=100)
     link = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
-    collaborators = models.ManyToManyField(Profile)
     qr_number = models.SmallIntegerField(default=0)
+
+    def __str__(self):
+        return f"project info: title: {self.title}, description: {self.description}"
+
     total_times_scanned = models.IntegerField(default = 0)
 
 
@@ -31,3 +34,6 @@ class Qr(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     times_scanned = models.IntegerField(default=0)
     image = ResizedImageField(size=[500, 500], upload_to='images/', blank=True, null=True)
+
+    def __str__(self):
+        return f"Qr related to project {self.project}"

@@ -83,7 +83,7 @@ ROOT_URLCONF = 'QrGenerator.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'Authentication/templates', 'mainApp/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -164,7 +164,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_HOST_USER = 'qr.generatorr@gmail.com' # il tuo indirizzo no-reply creato
-EMAIL_HOST_PASSWORD = 'qrgenerator01' # la password dell'account no-reply
+EMAIL_HOST_PASSWORD = 'pccg mxqj gfaj dmgv' # la password dell'account no-reply
 DEFAULT_FROM_EMAIL = 'no-reply <qr.generatorr@gmail.com>'
 
 
