@@ -109,7 +109,7 @@ def register_page(request):
 
 
 
-    return render(request, 'login.html')
+    return render(request, 'register.html')
 
 
 
