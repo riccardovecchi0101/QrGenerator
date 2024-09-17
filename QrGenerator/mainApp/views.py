@@ -197,8 +197,6 @@ def qr_maker(request, project_id):
 def redirect_to_site(request, project_id, qr_id):
     try:
         project = get_object_or_404(Project, id=project_id)
-        project.total_times_scanned += 1
-        project.save()
 
         qr = get_object_or_404(Qr, id=qr_id)
         qr.times_scanned += 1
