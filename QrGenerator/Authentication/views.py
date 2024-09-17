@@ -50,7 +50,7 @@ def login_page(request):
             messages.error(request, "Username o password non validi.")
             return redirect('authentication:login')
 
-    return render(request, 'login.html')
+    return render(request, 'authentication/login.html')
 
 
 # Define a view function for the registration page
@@ -109,7 +109,7 @@ def register_page(request):
 
 
 
-    return render(request, 'register.html')
+    return render(request, 'authentication/register.html')
 
 
 

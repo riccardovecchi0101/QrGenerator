@@ -16,7 +16,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 def home_page(request):
     try:
-        return render(request, "home.html")
+        return render(request, "mainApp/home.html")
     except Exception as e:
         return HttpResponse(f"Error: {e}", status=500)
 
@@ -42,7 +42,7 @@ def hub_page(request):
             for qr in Qr.objects.filter(project=project):
                 qr_list.append(qr)
 
-        return render(request, "hub.html", {'projects': projects, 'qrs': qr_list})
+        return render(request, "mainApp/hub.html", {'projects': projects, 'qrs': qr_list})
     except Profile.DoesNotExist:
         return HttpResponse("Profile not found", status=404)
     except Exception as e:
@@ -67,7 +67,7 @@ def create_project(request):
             project_owner = Profile.objects.get(user=current_user)
             ProjectProfile.objects.create(owner=project_owner, project=current_project)
 
-            return render(request, 'hub.html', {'project': current_project})
+            return render(request, 'mainApp/hub.html', {'project': current_project})
     except Profile.DoesNotExist:
         return HttpResponse("Profile not found", status=404)
     except Exception as e:
@@ -84,7 +84,7 @@ def delete_project(request, project_id):
                     os.remove(qr.image.path)
             project.delete()
             return redirect('mainApp:hub')
-        return render(request, 'hub.html', {'project': project})
+        return render(request, 'mainApp/hub.html', {'project': project})
     except Project.DoesNotExist:
         return HttpResponse("Project not found", status=404)
     except Exception as e:
@@ -124,7 +124,7 @@ def create_qr(request, project_id):
     try:
         project = get_object_or_404(Project, id=project_id)
         if request.method == 'GET':
-            return render(request, "QrMaker.html", context={'project': project})
+            return render(request, "mainApp/QrMaker.html", context={'project': project})
         return redirect('mainApp:hub')
     except Project.DoesNotExist:
         return HttpResponse("Project not found", status=404)
@@ -221,7 +221,7 @@ def qr_deleter(request, qr_id):
                 os.remove(qr.image.path)
             qr.delete()
             return redirect('mainApp:hub')
-        return render(request, 'hub.html')
+        return render(request, 'mainApp/hub.html')
     except Qr.DoesNotExist:
         return HttpResponse("QR code not found", status=404)
     except Exception as e:
@@ -236,7 +236,7 @@ def project_info(request, project_id):
 
         for qr in qr_list:
             total_scans += qr.times_scanned
-        return render(request, 'project_info.html', context={'project': project, 'project_qrs': qr_list, 'total_scans':total_scans})
+        return render(request, 'mainApp/project_info.html', context={'project': project, 'project_qrs': qr_list, 'total_scans':total_scans})
     except Project.DoesNotExist:
         return HttpResponse("Project not found", status=404)
     except Exception as e:
