@@ -232,9 +232,13 @@ def qr_deleter(request, qr_id):
 
 def project_info(request, project_id):
     try:
+        total_scans = 0
         project = get_object_or_404(Project, id=project_id)
         qr_list = [qr for qr in Qr.objects.filter(project=project)]
-        return render(request, 'project_info.html', context={'project': project, 'project_qrs': qr_list})
+
+        for qr in qr_list:
+            total_scans += qr.times_scanned
+        return render(request, 'project_info.html', context={'project': project, 'project_qrs': qr_list, 'total_scans':total_scans})
     except Project.DoesNotExist:
         return HttpResponse("Project not found", status=404)
     except Exception as e:

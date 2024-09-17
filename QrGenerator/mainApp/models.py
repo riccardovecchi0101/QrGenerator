@@ -21,8 +21,6 @@ class Project(models.Model):
     def __str__(self):
         return f"project info: title: {self.title}, description: {self.description}"
 
-    total_times_scanned = models.IntegerField(default = 0)
-
 
 class ProjectProfile(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE)

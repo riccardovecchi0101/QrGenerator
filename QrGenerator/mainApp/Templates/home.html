@@ -12,6 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 
     <title>Home page</title>
   </head>
@@ -49,13 +50,10 @@
   <a class="navbar-brand" href="#">  <div id="carousel" class="carousel slide" data-bs-ride="carousel" >
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src= "{% static 'qr.png' %}" class="d-block w-100" alt="not found" width="50px" height="50px">
+      <img src= "{% static 'AImage2.png'%}" class="d-block w-100" alt="not found" width="50px" height="50px">
     </div>
     <div class="carousel-item">
-      <img src="{% static 'qr2.jpg' %}" class="d-block w-100" alt="not found" width="50px" height="50px">
-    </div>
-    <div class="carousel-item">
-      <img src="{% static 'qr.png' %}" class="d-block w-100" alt="not found" width="50px" height="50px">
+      <img src="{% static 'AImage2.png' %}" class="d-block w-100" alt="not found" width="50px" height="50px">
     </div>
   </div>
 </div>
@@ -78,30 +76,26 @@
 <div data-bs-spy="scroll" data-bs-target="simple_navbar" data-bs-offset="0" class="container mb-5 mt-3" tabindex="0" style="padding-top:90px">
   <div class="container inner mb-3 mx-auto px-3">
     <h3 class = "title border border-3 border-secondary"> DESCRIZIONE DEL PROGETTO</h3>
-    <p> Questo progetto è nato con l'intento di creare una piattaforma dove si potessero gestire in maniera comoda diversi progetti e creare, come suggerisce il nome, Qr di diverso stile relativi a questi ultimi.
-"Qr GENERATOR" permette dunque una gesitone versatile di tutti i progetti che si vogliono creare, con la possibilità di modifica di alcuni parametri e di gestione dei Qr in maniera molto versatile</p>
+    <h5>Questo progetto è nato con l'intento di creare una piattaforma dove si potessero gestire in maniera comoda diversi progetti e creare, come suggerisce il nome, Qr di diverso stile relativi a questi ultimi.
+"Qr GENERATOR" permette dunque una gesitone versatile di tutti i progetti che si vogliono creare, con la possibilità di modifica di alcuni parametri e di gestione dei Qr in maniera molto versatile</h5>
+    <div class="container-fluid mt-5 border border-3 border-primary">
     <ul>
       <li>
         <h3 class = "title"> Crea i tuoi progetti in maniera versatile</h3>
         <div class="container-fluid mt-3 mb-3">
-          <div class="row">
-              <div class="col-md-6 border border-dark mb-4 d-flex fixed-width-col">
-                <img class="img-fluid" src="{% static 'creaprogetto.PNG' %}">
-              </div>
-              <div class="col-md-6 mb-4 border border-dark d-flex fixed-width-col">
-                <img class="img-fluid" src="{% static 'Gestione.PNG' %}">"
-              </div>
-          </div>
+          <p>Qr generator ti permette di creare uno spazio per i tuoi progetti dove potergli associare dei qr code, puoi modificarli in qualsiasi momento.</p>
         </div>
       </li>
       <li>
         <h3 class="title"> Inventa Qr a tua discrezione</h3>
         <div class="container-fluid mt-3 mb-3">
-        <div class="row">
-            <div class="col-md-6 border border-dark mb-4 d-flex fixed-width-col mx-auto">
-              <img class="img-fluid" src="{% static 'creaQr.PNG' %}">
-            </div>
+          <p>Crea qr di qualsiasi colore! puoi aderittura peronalizzarli con immagini e scritte.</p>
         </div>
+      </li>
+      <li>
+        <h3 class="title"> E se il link del sito del progetto cambia?</h3>
+        <div class="container-fluid mt-3 mb-3">
+          <p> Non preoccuparti, tutti i qr che hai già creato e stampato continueranno a funzionare grazie ad un sistema di ridirezione</p>
         </div>
       </li>
       <li> <h3> Il progetto ti interessa?</h3> <a href="https://github.com/riccardovecchi0101/QrGenerator">clicca qui</a></li>
@@ -110,7 +104,7 @@
 </div>
 
 <div class="navbar navbar-expand-lg navbar-light fixed-bottom"  style="background-color: #ECECEC;">
-  <div class="container mx-auto px-3">
+  <div class="container px-3">
     <div class="font-italic" style="horiz-align: left;">Powered by <a target="_blank" href="http://imagelab.ing.unimore.it">
             <img src="{% static 'aimagelab.png' %}" height="25" alt="AImageLab"></a>
     </div>

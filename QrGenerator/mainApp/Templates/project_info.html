@@ -39,7 +39,7 @@
             <button class="btn btn-outline-dark"><h3>{{project.title}} INFO: </h3></button>
             <hr>
             <div class="container mt-5">
-                <h5 class="mb-3"> TOTAL TIMES SCANNED: {{ project.total_times_scanned }}</h5>
+                <h5 class="mb-3"> TOTAL TIMES SCANNED: {{ total_scans }}</h5>
                 <div class="row">
                   {% for qr in project_qrs %}
                     <div class="col-md-4 mb-4 d-flex fixed-width-col">
