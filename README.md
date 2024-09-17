@@ -15,5 +15,6 @@ QR Code Generator è un'applicazione web sviluppata in Django che permette di ge
 
 - Python 3.8 o superiore
 - Django 4.0 o superiore
+- Django mathfilters
 - [Pillow](https://pillow.readthedocs.io/en/stable/) (per la manipolazione delle immagini)
 - [qrcode](https://pypi.org/project/qrcode/) (per la generazione dei QR code)
