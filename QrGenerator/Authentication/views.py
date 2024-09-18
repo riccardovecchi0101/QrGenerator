@@ -139,8 +139,6 @@ def verify_email(request, uidb64, token):
 def validate_pw(password):
     pattern = r'^(?=.*[A-Z])(?=.*\d)[A-Za-z\d.]{8,}$'
     if not re.match(pattern, password):
-        raise(
-            "La password deve contenere almeno una lettera maiuscola, un numero e un punto."
-        )
+        return False
     else:
         return True
