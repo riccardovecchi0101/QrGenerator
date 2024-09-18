@@ -59,8 +59,10 @@ def create_project(request):
             if not link.startswith(('http://', 'https://')):
                 link = 'https://' + link
 
-            if not title or not description:
-                return render(request, 'hub.html', {'error': 'Title and description are required.'})
+            if not title:
+                title="No title"
+            if not description:
+                description="No description"
 
             current_project = Project.objects.create(description=description, title=title, date=date, link=link)
             current_user = request.user
