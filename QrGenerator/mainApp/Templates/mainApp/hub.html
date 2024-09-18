@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 
@@ -7,17 +6,11 @@
     {% load mathfilters %}
 
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width,
-                   initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Your projects</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-     rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-     <link rel="stylesheet" href="{% static 'style.css' %}">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 
@@ -25,275 +18,225 @@
 
 <body class="hub_page">
 
-<div class="container-fluid d-flex">
-  <nav id="simple_navbar" class="navbar fixed-top navbar-light bg-primary px-3">
-
-  <h1 id="title" class="nav mx-auto" style="color: white;"> AImageLab QR GENERATOR </h1>
-  <ul class="nav">
-    <li class="nav-item">
-       <a class="nav-link text-white" href="https://github.com/riccardovecchi0101/QrGenerator"><i class="bi bi-github"></i></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-white"  href="#" data-toggle="modal" data-target="#userModal">
-            <i class="fa-regular fa-user"></i>
-            Profile
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-white" href="{% url 'mainApp:logout' %}"> Logout </a>
-    </li>
-
-    </ul>
+<div class="container-fluid">
+    <nav id="simple_navbar" class="navbar navbar-expand-lg navbar-light bg-primary px-3 fixed-top">
+        <a class="navbar-brand mx-auto" href="#" style="color: white;">AImageLab QR GENERATOR</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="https://github.com/riccardovecchi0101/QrGenerator"><i class="bi bi-github"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#" data-bs-toggle="modal" data-bs-target="#userModal">
+                        <i class="fa-regular fa-user"></i> Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'mainApp:logout' %}">Logout</a>
+                </li>
+            </ul>
+        </div>
     </nav>
+</div>
+
+<hr>
+
+<div class="bg-light flex-fill mb-3">
+    <div class="p-2 d-md-none d-flex text-white ">
+        <a href="#" class="text-white" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+        </a>
     </div>
-
-
-            <hr>
-
-
-        <div class="bg-light flex-fill mb-3">
-            <div class="p-2 d-md-none d-flex text-white bg-success">
-                <a href="#" class="text-white" data-bs-spy="scroll" data-bs-target="simple_navbar" data-bs-offset="0" class="inner" tabindex="0">
-                    <i class="fa-solid fa-bars"></i>
-                </a>
+    <div class="p-4 pt-5">
+        <nav style="--bs-breadcrumb-divider:'>'; font-size:14px;">
+            <div class="d-grid gap-2 position-relative">
+                <button class="btn btn-outline-secondary position-absolute end-0" data-bs-toggle="modal" data-bs-target="#ProjectModal" type="button">Add project</button>
             </div>
-            <div class="p-4">
-                <nav style="--bs-breadcrumb-divider:'>';font-size:14px; padding-top:60px">
-                     <div class="d-grid gap-2 position-relative">
-                            <button class="btn btn-outline-secondary position-absolute end-0" data-toggle="modal" data-target="#ProjectModal" type="button">Add project</button>
-                     </div>
-                    <ol class="breadcrumb">
-                        <h1><a class=" btn btn-lg btn-outline-dark">My projects</a></h1>
-                    </ol>
-                </nav>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a class="btn btn-lg btn-outline-dark">My projects</a></li>
+            </ol>
+        </nav>
 
-                <hr>
+        <hr>
 
-     <ul class="list-unstyled">
-         {% for project in projects %}
-        <li>
-            <div class="card text-black border border-3 border-primary mb-3" style="max-width: 120rem;">
-                <div class="card-header">{{ project.title }}</div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ project.title }}</h5>
-                    <p class="card-text">{{ project.description }}</p>
-                    <ul class="list-group list-unstyled list-group-horizontal gap-3 align-items-end">
-                        <!-- Edit Button -->
-                         <li>
-
-                            <a href="#" class="btn btn-lg btn-outline-success" data-toggle="modal" data-target="#editProjectModal{{ forloop.counter }}">
-                                <i class="bi bi-pencil"></i> Edit
-                            </a>
-                             <!-- Edit Project Modal -->
+        <ul class="list-unstyled">
+            {% for project in projects %}
+            <li>
+                <div class="card text-black border border-3 border-primary mb-3">
+                    <div class="card-header">{{ project.title }}</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        <p class="card-text">{{ project.description }}</p>
+                        <ul class="list-group list-unstyled list-group-horizontal gap-3 align-items-end">
+                            <!-- Edit Button -->
+                            <li>
+                                <a href="#" class="btn btn-lg btn-outline-success" data-bs-toggle="modal" data-bs-target="#editProjectModal{{ forloop.counter }}">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </a>
+                                <!-- Edit Project Modal -->
                                 <div class="modal fade" id="editProjectModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="editProjectModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="editProjectModalLabel">Edit Project</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                                <div class="modal-body">
-                                                    <form id="editProjectForm" method="POST" action="{% url 'mainApp:edit_project' project.id %}">
-                                                        {% csrf_token %}
-                                                        <input type="hidden" name="project_id" id={{project.id}}>
-                                                        <label for="edit-title" class="form-label">Project Title</label>
-                                                        <input type="text" name="title" id="edit-title" class="form-control" placeholder="{{project.title}}">
-                                                        <label for="edit-description" class="form-label">Description</label>
-                                                        <textarea name="description" id="edit-description" class="form-control" rows="3" maxlength="1000" placeholder="{{project.description}}"></textarea>
-                                                        <div id="passwordHelpBlockk2" class="form-text">Max 1000 characters</div>
-                                                        <label for="edit-link" class="form-label">Site link</label>
-                                                        <input type="text" name="link" id="edit-link" class="form-control" placeholder="{{project.link}}">
-                                                        <button type="submit" class="btn btn-primary mt-3" id="editbtn" data-id="{{project.id}}" >Save changes</button>
-
-                                                    </form>
-                                                </div>
+                                            <div class="modal-body">
+                                                <form id="editProjectForm" method="POST" action="{% url 'mainApp:edit_project' project.id %}">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="project_id" id="edit-project-id" value="{{project.id}}">
+                                                    <label for="edit-title" class="form-label">Project Title</label>
+                                                    <input type="text" name="title" id="edit-title" class="form-control" placeholder="{{project.title}}">
+                                                    <label for="edit-description" class="form-label">Description</label>
+                                                    <textarea name="description" id="edit-description" class="form-control" rows="3" maxlength="1000" placeholder="{{project.description}}"></textarea>
+                                                    <div class="form-text">Max 1000 characters</div>
+                                                    <label for="edit-link" class="form-label">Site link</label>
+                                                    <input type="text" name="link" id="edit-link" class="form-control" placeholder="{{project.link}}">
+                                                    <button type="submit" class="btn btn-primary mt-3">Save changes</button>
+                                                </form>
                                             </div>
                                         </div>
+                                    </div>
                                 </div>
-                             </form>
-                        </li>
-                        <!-- Delete Button -->
-                        <li>
-                            <form method="POST" action="{% url 'mainApp:delete_project' project.id %}" onsubmit="return confirmDelete();">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-lg btn-outline-danger">
-                                    <i class="bi bi-x"></i> Remove
-                                </button>
-                            </form>
-                        </li>
-                         <!-- QR Button -->
-                        <li>
-                            <form method="GET" action="{% url 'mainApp:create_qr' project.id %}">
-                                {% csrf_token %}
-                                <ul class="list-group list-unstyled list-group-horizontal gap-3">
-                                    <li><button type="submit"  class="btn btn-lg btn-outline-dark" {% if project.qr_number >= 5 %} disabled {% endif %}">Add QR</button></li>
-                                </ul>
-                            </form>
-                        <li/>
-
-                        <li> <label> You can add up to {{ 5|sub:project.qr_number }} Qrs</label></li>
-
-
-                  <li class="ms-auto mb-5">
-         <!-- Carousel -->
-                      <div id="carouselProject{{ project.id }}" class="carousel slide" data-bs-interval="false" style="width: 200px; height: 200px;">
-                        <div class="carousel-inner">
-                                {% for qr in qrs %}
-                                    {% if qr.project.id == project.id %}
-
-                                        <div class="carousel-item border border-3 border-dark rounded mb-3">
-                                           <ul class="list-unstyled p-1">
-                                               <li><img src="{{ qr.image.url }}" class="img-fluid" alt="QR Code"></li>
-                                               <li class="mt-3">
-                                                    <form method="POST" action="{% url 'mainApp:qr_deleter' qr.id %}" onsubmit="return confirmDeleteQr();">
-                                                         {% csrf_token %}
-                                                        <button id ="delete{{project.id}}{{qr.id}}" class="btn btn-outline-danger" type="submit" href="#"><i>Delete QR</i></button>
-                                                    </form>
-                                               </li>
-                                           </ul>
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
-                        </div>
-
-
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProject{{ project.id }}" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(100%);"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselProject{{ project.id }}" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" style="filter: invert(100%);" aria-hidden="true"></span>
-                        </button>
+                            </li>
+                            <!-- Delete Button -->
+                            <li>
+                                <form method="POST" action="{% url 'mainApp:delete_project' project.id %}" onsubmit="return confirmDelete();">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-lg btn-outline-danger">
+                                        <i class="bi bi-x"></i> Remove
+                                    </button>
+                                </form>
+                            </li>
+                            <!-- QR Button -->
+                            <li>
+                                <form method="GET" action="{% url 'mainApp:create_qr' project.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-lg btn-outline-dark" {% if project.qr_number >= 5 %} disabled {% endif %}>Add QR</button>
+                                </form>
+                            </li>
+                            <li class="ms-auto mb-5">
+                                <!-- Carousel -->
+                                <div id="carouselProject{{ project.id }}" class="carousel slide" data-bs-interval="false">
+                                    <div class="carousel-inner">
+                                        {% for qr in qrs %}
+                                            {% if qr.project.id == project.id %}
+                                                <div class="carousel-item border border-3 border-dark rounded">
+                                                    <ul class="list-unstyled p-1">
+                                                        <li><img src="{{ qr.image.url }}" class="img-fluid" alt="QR Code"></li>
+                                                        <li class="mt-3">
+                                                            <form method="POST" action="{% url 'mainApp:qr_deleter' qr.id %}" onsubmit="return confirmDeleteQr();">
+                                                                {% csrf_token %}
+                                                                <button class="btn btn-outline-danger" type="submit">Delete QR</button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselProject{{ project.id }}" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(100%);"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselProject{{ project.id }}" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" style="filter: invert(100%);" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="mt-3"><a href="{% url 'mainApp:project_info' project.id %}">PROJECT INFO</a></div>
+                        <div class="mt-3"><label>You can add up to {{ 5|sub:project.qr_number }} QRs</label></div>
                     </div>
-                    </li>
-
-                    </ul>
-                    <div class="mt-3"><a href="{% url 'mainApp:project_info' project.id %}">PROJECT INFO</a></div>
-                        {% endfor %}
-                 </div>
-            </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 
 <div class="navbar navbar-expand-lg navbar-light fixed-bottom"  style="background-color: #ECECEC;">
-    <div class="container-fluid">
-        <div class="font-italic d-none d-sm-block" style="horiz-align: left;">Powered by <a target="_blank" href="http://imagelab.ing.unimore.it">
+  <div class="container">
+    <div class="font-italic" style="horiz-align: left;">Powered by <a target="_blank" href="http://imagelab.ing.unimore.it">
             <img src="{% static 'aimagelab.png' %}" height="25" alt="AImageLab"></a>
-        </div>
+    </div>
     <div class="font-italic" style="float: right !important;">Designed by <a href="http://federicobolelli.it" target="_blank">F. Bolelli</a> and   <a href="https://github.com/riccardovecchi0101" target="_blank"> R. Vecchi </a>, managed by <a href="http://federicobolelli.it" target="_blank">F. Bolelli</a>
-        <a target="_blank" href="https://github.com/riccardovecchi0101/QrGenerator"><i class="bi bi-github" aria-hidden="true"></i></a>
-    </div>
-  </div>
-</div>
-    </ul>
-
-</div>
-
-
-</div>
-
-
-
-<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Profile info</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <li>username: {{ user.username }}</li>
-          <li>nome: {{ user.first_name }}</li>
-          <li>cognome: {{ user.last_name }}</li>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="ProjectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ProjectModalLabel">Add project</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <form>
-              {% csrf_token %}
-              <label for="title1" class="form-label">ProjectTitle</label>
-              <input type="text" id="title1" class="form-control" aria-describedby="passwordHelpBlock">
-              <label for="description" class="form-label">Description</label>
-              <textarea class="form-control" id="description" rows="3" maxlength="1000"></textarea>
-              <div id="passwordHelpBlock" class="form-text">
-                max 1000 characters
-              </div>
-              <label for="site_link" class="form-label">link to site:</label>
-              <input type="text" id="site_link" class="form-control" aria-describedby="passwordHelpBlock">
-              <script> const projectCreatorUrl = "{% url 'mainApp:project_creator' %}";</script>
-              <button id="submit-button" type="submit" class="btn btn-primary mt-3" id="submit-button">Submit</button>
-          </form>
-      </div>
+            <a target="_blank" href="https://github.com/riccardovecchi0101/QrGenerator"><i class="bi bi-github" aria-hidden="true"></i></a>
     </div>
   </div>
 </div>
 
 
+<!-- Modals -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Profile info</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <li>Username: {{ user.username }}</li>
+                <li>Nome: {{ user.first_name }}</li>
+                <li>Cognome: {{ user.last_name }}</li>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div class="modal fade" id="ProjectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ProjectModalLabel">Add project</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'mainApp:project_creator' %}">
+                    {% csrf_token %}
+                    <label for="title1" class="form-label">Project Title</label>
+                    <input type="text" id="title1" class="form-control" aria-describedby="passwordHelpBlock">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" rows="3" maxlength="1000"></textarea>
+                    <div id="passwordHelpBlock" class="form-text">Max 1000 characters</div>
+                    <label for="site_link" class="form-label">Link to site:</label>
+                    <input type="text" id="site_link" class="form-control" aria-describedby="passwordHelpBlock">
+                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-
-<!--    CODICE PER FIXARE I CAROSELLI  -->
+<!-- Scripts -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-
     var carousels = document.querySelectorAll('.carousel');
-
     carousels.forEach(function(carousel) {
-
         var items = carousel.querySelectorAll('.carousel-item');
-
-
         if (items.length > 0) {
-
             items.forEach(function(item) {
                 item.classList.remove('active');
             });
-
-
             items[0].classList.add('active');
         }
     });
 });
+
+function confirmDelete() {
+    return confirm('Are you sure you want to delete this project? This action cannot be undone.');
+}
+
+function confirmDeleteQr() {
+    return confirm('Are you sure you want to delete this QR? This action cannot be undone.');
+}
 </script>
-    <!---DELETE BUTTON -->
-<script>
-       function confirmDelete() {
-        return confirm('Are you sure you want to delete this project? This action cannot be undone.');
-}</script>
-
- <!-- QR DELETER -->
-<script>
-    function confirmDeleteQr(){
-      return confirm('Are you sure you want to delete this QR? This action cannot be undone.');
-}</script>
-
-
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
-<script src="{% static 'script.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-
-
 </body>
-
 </html>
-
-

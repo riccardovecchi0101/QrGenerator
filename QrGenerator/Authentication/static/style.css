@@ -1,0 +1,19 @@
+    .card {
+    padding: 15px; /* Assicura che ci sia spazio interno alla card */
+}
+
+.card input,
+.card textarea,
+.card button {
+    width: 100%; /* Assicura che gli elementi del modulo si adattino alla larghezza della card */
+}
+
+.card .form-control {
+    box-sizing: border-box; /* Assicura che il padding e il bordo siano inclusi nella larghezza totale dell'input */
+}
+
+@media (max-width: 768px) {
+    .card {
+        margin: 10px; /* Riduci il margine per dispositivi mobili */
+    }
+}

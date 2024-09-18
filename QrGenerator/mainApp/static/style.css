@@ -1,5 +1,79 @@
 
-.carousel-item {
-    width: 100%;
-    height: auto;
-}
+        .carousel {
+            max-width:200px;
+            width: 100%;
+            max-height: 200px;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .card {
+            margin: 10px;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+
+        @media (max-width: 768px) {
+            .carousel {
+                max-height: 150px;
+            }
+
+            .card {
+                margin: 5px;
+            }
+
+            .btn-lg {
+                font-size: 0.875rem;
+            }
+
+            .navbar {
+                padding: 0.5rem 1rem;
+            }
+
+            .navbar-brand {
+                font-size: 1.25rem;
+            }
+
+            .breadcrumb {
+                font-size: 0.875rem;
+            }
+
+            .modal-dialog {
+                max-width: 90%;
+            }
+
+            .carousel-control-prev-icon,
+            .carousel-control-next-icon {
+                background-color: rgba(0, 0, 0, 0.5); /* Add a dark background to carousel controls for better visibility */
+            }
+
+
+            @media (max-width: 480px) {
+                .carousel {
+                    max-height: 100px;
+                }
+
+                .btn-lg {
+                    font-size: 0.75rem;
+                }
+
+                .card {
+                    margin: 3px;
+                }
+
+                .modal-dialog {
+                    max-width: 95%;
+                }
+            }
+        }
