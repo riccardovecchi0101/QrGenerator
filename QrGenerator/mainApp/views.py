@@ -56,6 +56,9 @@ def create_project(request):
             title = request.POST.get('title')
             description = request.POST.get('description')
             link = request.POST.get('link')
+
+            print(f"received, title: {title}, description:{description}, link")
+
             if not link.startswith(('http://', 'https://')):
                 link = 'https://' + link
 
@@ -110,6 +113,7 @@ def edit_project(request, project_id):
                 if link:
                     project.link = link
 
+                print('saved')
                 project.save()
                 return redirect('mainApp:hub')
             else:

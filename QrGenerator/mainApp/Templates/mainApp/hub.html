@@ -195,16 +195,17 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{% url 'mainApp:project_creator' %}">
+                <form>
                     {% csrf_token %}
                     <label for="title1" class="form-label">Project Title</label>
-                    <input type="text" id="title1" class="form-control" aria-describedby="passwordHelpBlock">
+                    <input type="text" id="title1" class="form-control" aria-describedby="passwordHelpBlock" name="title1">
                     <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" rows="3" maxlength="1000"></textarea>
+                    <textarea class="form-control" id="description" rows="3" maxlength="1000" name="description"></textarea>
                     <div id="passwordHelpBlock" class="form-text">Max 1000 characters</div>
                     <label for="site_link" class="form-label">Link to site:</label>
-                    <input type="text" id="site_link" class="form-control" aria-describedby="passwordHelpBlock">
-                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                    <input type="text" id="site_link" class="form-control" aria-describedby="passwordHelpBlock" name="site_link">
+                    <script> const projectCreatorUrl = "{% url 'mainApp:project_creator' %}";</script>
+                    <button type="submit" id='submit-button' class="btn btn-primary mt-3">Submit</button>
                 </form>
             </div>
         </div>
@@ -235,8 +236,11 @@ function confirmDeleteQr() {
 }
 </script>
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'script.js' %}"></script>
+
 </body>
 </html>
