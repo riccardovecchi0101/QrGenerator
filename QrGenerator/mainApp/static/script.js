@@ -48,26 +48,26 @@ document.addEventListener('DOMContentLoaded', function () {
             const fileInput = document.getElementById('imageUpload');
             const labelLogo = document.getElementById('inputTextLogo').value;
             const labelColor = document.getElementById('textColor').value;
-            const file = fileInput.files[0]; // Ottieni il primo file selezionato
+            const file = fileInput.files[0];
             const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
             const formData = new FormData();
 
             formData.append('preview', true);
-            formData.append('fg_color', fg_color); // Aggiungi il titolo
-            formData.append('bg_color', bg_color); // Aggiungi la descrizione
+            formData.append('fg_color', fg_color);
+            formData.append('bg_color', bg_color);
             formData.append('LabelLogo', labelLogo);
             formData.append('LabelColor', labelColor);
 
             if (file) {
-                formData.append('image', file); // Aggiungi il file al FormData
+                formData.append('image', file);
             }
 
             console.log("hello there");
             console.log(preview);
 
-            // Invia una richiesta POST con fetch
-            fetch(qrMakerUrl, { // Sostituisci con l'URL del tuo endpoint
+
+            fetch(qrMakerUrl, {
                 method: 'POST',
                 body: formData,
                 headers: {

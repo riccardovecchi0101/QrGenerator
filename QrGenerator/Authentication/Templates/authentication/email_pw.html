@@ -1,0 +1,6 @@
+ciao {{ user.username}} se hai chiesto un reset della password per: {{ email }}. segui questo link:
+{{ protocol}}://{{ domain }}{% url 'authentication:password_reset_confirm' uidb64=uid token=token %}
+Altrimenti ignora questa mail.
+
+
+Il team Qr code.
