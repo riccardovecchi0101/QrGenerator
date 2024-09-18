@@ -71,7 +71,7 @@ def register_page(request):
 
 
         if not validate_pw(password):
-            messages.info(request, 'La password deve essere lunga almeno 8 caratteri, contenere solo caratteri alfanumerici, può contenere \".\" e deve contenere una maiuscola.')
+            messages.info(request, 'La password deve essere lunga almeno 8 caratteri, contenere solo caratteri alfanumerici, può contenere \".\" e deve contenere una maiuscola e un numero')
             return redirect('authentication:register')
 
         user = User.objects.create_user(
