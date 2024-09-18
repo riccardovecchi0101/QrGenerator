@@ -13,15 +13,15 @@ from django.urls import reverse
 from django.utils.html import strip_tags
 
 from QrGenerator import settings
+from .forms import CustomSetPasswordForm
 from .models import *
 from mainApp.models import Profile
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode
-
+from django.contrib.auth import views as auth_views
 from django.core.validators import RegexValidator
-
 
 User = get_user_model()
 
@@ -71,7 +71,7 @@ def register_page(request):
 
 
         if not validate_pw(password):
-            messages.info(request, 'La password deve contenere solo caratteri alfanumerici, può contenere \".\" e deve contenere una maiuscola.')
+            messages.info(request, 'La password deve essere lunga almeno 8 caratteri, contenere solo caratteri alfanumerici, può contenere \".\" e deve contenere una maiuscola.')
             return redirect('authentication:register')
 
         user = User.objects.create_user(
@@ -115,14 +115,9 @@ def register_page(request):
 
 
 
-def validate_pw(s):
-    pattern = r'^(?=.*\d)(?=.*[A-Z])[a-zA-Z0-9.]+$'
-    if re.match(pattern, s):
-        return True
-    else:
-        return False
 
-
+class CustomPasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    form_class = CustomSetPasswordForm
 
 
 def verify_email(request, uidb64, token):
@@ -140,3 +135,12 @@ def verify_email(request, uidb64, token):
         messages.error(request, "Il link di conferma non è valido.")
 
     return redirect('authentication:login')
+
+def validate_pw(password):
+    pattern = r'^(?=.*[A-Z])(?=.*\d)[A-Za-z\d.]{8,}$'
+    if not re.match(pattern, password):
+        raise(
+            "La password deve contenere almeno una lettera maiuscola, un numero e un punto."
+        )
+    else:
+        return True
