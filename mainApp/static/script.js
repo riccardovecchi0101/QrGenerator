@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
+                        'enctype': 'multipart/form-data',
                         'X-CSRFToken': csrfToken
                     },
                     body: new URLSearchParams(data)
