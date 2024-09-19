@@ -24,12 +24,15 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('Authentication.urls')),
+    path('auth/', include('authentication.urls')),
     path('', include('mainApp.urls')),
-
 ]
 
-
+# Enable if we need to access media
+# The following works only if DEBUG==True. We use UNPREFIXED_MEDIA_URL, to make it work from Apache
+# when running from a subfolder which provides SCRIPT_NAME to the WSGI application
+urlpatterns += static(settings.UNPREFIXED_MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

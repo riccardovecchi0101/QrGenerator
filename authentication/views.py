@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.html import strip_tags
 
-from QrGenerator import settings
+from config import settings
 from .forms import CustomSetPasswordForm
 from .models import *
 from mainApp.models import Profile
@@ -97,7 +97,7 @@ def register_page(request):
 
 
         subject = 'Conferma la tua email'
-        html_message = render_to_string('Authentication/email_confirmation.html', {
+        html_message = render_to_string('authentication/email_confirmation.html', {
             'user': user,
             'verification_link': verification_link
         })
@@ -136,8 +136,9 @@ def verify_email(request, uidb64, token):
 
     return redirect('authentication:login')
 
+
 def validate_pw(password):
-    pattern = r'^(?=.*[A-Z])(?=.*\d)[A-Za-z\d.]{8,}$'
+    pattern = r'^(?=.*[A-Z])(?=.*\d)(?=.*[=@$!%*?&])(.{8,})$'
     if not re.match(pattern, password):
         return False
     else:
