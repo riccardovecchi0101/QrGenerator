@@ -53,9 +53,9 @@ def create_project(request):
     try:
         if request.method == 'POST':
             date = timezone.datetime.now()
-            title = request.POST.get('title')
+            title = request.POST.get('title1')
             description = request.POST.get('description')
-            link = request.POST.get('link')
+            link = request.POST.get('site_link')
 
             print(f"received, title: {title}, description:{description}, link")
 
@@ -72,7 +72,7 @@ def create_project(request):
             project_owner = Profile.objects.get(user=current_user)
             ProjectProfile.objects.create(owner=project_owner, project=current_project)
 
-            return render(request, 'mainApp/hub.html', {'project': current_project})
+            return redirect('mainApp:hub')
     except Profile.DoesNotExist:
         return HttpResponse("Profile not found", status=404)
     except Exception as e:
@@ -247,7 +247,7 @@ def project_info(request, project_id):
         return HttpResponse("Project not found", status=404)
     except Exception as e:
         return HttpResponse(f"Error: {e}", status=500)
-def create_text_image(text,  text_color, font_size=40, image_size=(300, 100)):
+def create_text_image(text,  text_color, font_size=50, image_size=(300, 100)):
     """
     Crea un'immagine contenente solo il testo, con sfondo trasparente.
 

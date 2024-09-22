@@ -1,43 +1,7 @@
 
 // Waiting for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function () {
-     if (document.body.classList.contains('hub_page')) {
-            console.log("DOM loaded");
-            const submitButton = document.getElementById('submit-button');
-            submitButton.addEventListener('click', function (event) {
-
-                const title = document.getElementById('title1').value;
-                const description = document.getElementById('description').value;
-                const link = document.getElementById('site_link').value;
-                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-                const data = {
-                    'title': title,
-                    'link': link,
-                    'description': description
-                };
-
-                fetch(projectCreatorUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'enctype': 'multipart/form-data',
-                        'X-CSRFToken': csrfToken
-                    },
-                    body: new URLSearchParams(data)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Progetto inserito', data);
-                    alert("Progetto inserito correttamente");
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-            });
-    }
-
-    else if (document.body.classList.contains('maker_page')) {
+     if (document.body.classList.contains('maker_page')) {
          const prevButton = document.getElementById('prevQr');
 
          prevButton.addEventListener('click', function(event){
@@ -86,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
-
 });
 
 

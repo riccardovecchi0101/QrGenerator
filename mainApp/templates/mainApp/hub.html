@@ -195,7 +195,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="CreateProjectForm" method="POST" action="{% url 'mainApp:project_creator' %}">
                     {% csrf_token %}
                     <label for="title1" class="form-label">Project Title</label>
                     <input type="text" id="title1" class="form-control" aria-describedby="passwordHelpBlock" name="title1">
@@ -204,7 +204,7 @@
                     <div id="passwordHelpBlock" class="form-text">Max 1000 characters</div>
                     <label for="site_link" class="form-label">Link to site:</label>
                     <input type="text" id="site_link" class="form-control" aria-describedby="passwordHelpBlock" name="site_link">
-                    <script> const projectCreatorUrl = "{% url 'mainApp:project_creator' %}";</script>
+                   <!-- <script> const projectCreatorUrl = "{% url 'mainApp:project_creator' %}";</script> -->
                     <button type="submit" id='submit-button' class="btn btn-primary mt-3">Submit</button>
                 </form>
             </div>
